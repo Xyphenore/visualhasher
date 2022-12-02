@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="source" pattern="src[VisualHasher.main]:com.adavid.visualhasher..*" />
+</component>

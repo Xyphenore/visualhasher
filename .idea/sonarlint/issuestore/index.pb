@@ -7,10 +7,10 @@ X
 gradlew,5/b/5bbfa66edb4db3c7c33c5181f43510990d3307f9
 ;
 gradlew.bat,2/a/2a45a911a8f1836b0b6c5b758962572012d8f8c3
->
-.gitlab-ci.yml,5/8/587d266bb27a4dc3022bbed44dfa19849df3044c
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 :
 
 LICENSE.md,4/a/4a8486805915245bbbe2e3c8c1a9d680c6843a82
+d
+4src/main/java/com/adavid/visualhasher/SwingView.java,1/9/191d04797191e578b54555b060a7c847de2018d4

@@ -12,5 +12,3 @@ X
 :
 
 LICENSE.md,4/a/4a8486805915245bbbe2e3c8c1a9d680c6843a82
-d
-4src/main/java/com/adavid/visualhasher/SwingView.java,1/9/191d04797191e578b54555b060a7c847de2018d4

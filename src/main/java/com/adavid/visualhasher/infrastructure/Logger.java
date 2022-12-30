@@ -15,4 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.view.exception;
+package com.adavid.visualhasher.infrastructure;
+
+public final class Logger {
+}

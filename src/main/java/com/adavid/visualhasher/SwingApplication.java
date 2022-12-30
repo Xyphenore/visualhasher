@@ -17,43 +17,43 @@
 
 package com.adavid.visualhasher;
 
+import com.adavid.visualhasher.presentation.views.SwingView;
+import com.adavid.visualhasher.presentation.views.View;
+
 /**
- * The VisualHasher application.
+ * Default implementation of Application. Use Swing for the user presentation.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see SwingApplication
+ * @see Application
  * @since 1.0.0
  */
-@FunctionalInterface
-public interface Application {
+public final class SwingApplication implements Application {
+    private final View view;
+
     /**
-     * Main function. Create and execute the default application SwingApplication.
-     *
-     * @param args String[]. Launch arguments.
+     * Create a SwingApplication with the default title.
      *
      * @since 1.0.0
      */
-    static void main(final String[] args) {
-        Application.getDefaultApplication().execute();
+    public SwingApplication() {
+        this(null);
     }
 
     /**
-     * Run the application.
+     * Create a SwingApplication with the given title.
+     *
+     * @param title String. The title of the application, it might be null.
      *
      * @since 1.0.0
      */
-    void execute();
+    public SwingApplication(final String title) {
+        super();
+        this.view = new SwingView(title);
+    }
 
-    /**
-     * Return the default implementation of Application.
-     *
-     * @return Returns Application.
-     *
-     * @see SwingApplication
-     * @since 1.0.0
-     */
-    static Application getDefaultApplication() {
-        return new SwingApplication();
+    @Override
+    public void execute() {
+        this.view.execute();
     }
 }

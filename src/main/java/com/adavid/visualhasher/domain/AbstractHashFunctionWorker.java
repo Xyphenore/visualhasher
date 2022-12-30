@@ -25,6 +25,24 @@ import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 
 import javax.swing.SwingWorker;
 
+/**
+ * The common base of HashFunctionWorker.
+ *
+ * <br><br>
+ * <u><b>HashFunctions list:</b></u><br>
+ * - {@link com.adavid.visualhasher.domain.ChainingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker}<br>
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see ChainingHashFunctionWorker
+ * @see DoubleChoiceHashFunctionWorker
+ * @see LinearOpenAddressingHashFunctionWorker
+ * @see QuadraticOpenAddressingHashFunctionWorker
+ * @since 1.0.0
+ */
 public abstract class AbstractHashFunctionWorker extends SwingWorker<HashFunctionResult, HashFunctionResult> {
     private final int boxes;
     private final int draws;
@@ -38,9 +56,7 @@ public abstract class AbstractHashFunctionWorker extends SwingWorker<HashFunctio
 
             if (!drawsInterval.contains(draws)) {
                 throw new IllegalNumberOfDrawsException("Cannot create an AbstractHashFunctionWorker with an invalid " + "number of draws.",
-                                                        new DrawsOutOfBoundsException(draws,
-                                                                                      drawsInterval.convertToRange()
-                                                        )
+                                                        new DrawsOutOfBoundsException(draws, drawsInterval)
                 );
             }
 

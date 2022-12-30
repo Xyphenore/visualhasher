@@ -19,6 +19,28 @@ package com.adavid.visualhasher.domain;
 
 import java.util.List;
 
+/**
+ * The linear open addressing hash function.
+ * Draws a box index between 1, and the number_of_boxes, if the box is empty, increments balls, else increment the box
+ * index like: (box_index + 1 * n) % number_of_boxes.
+ * Where n start from 1 to positive integer infinity.
+ * Repeat this k times.
+ * Add nothing to information.
+ *
+ * <br><br>
+ * <u><b>Others HashFunction list:</b></u><br>
+ * - {@link com.adavid.visualhasher.domain.ChainingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker}<br>
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see AbstractHashFunctionWorker
+ * @see ChainingHashFunctionWorker
+ * @see DoubleChoiceHashFunctionWorker
+ * @see QuadraticOpenAddressingHashFunctionWorker
+ * @since 1.0.0
+ */
 public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFunctionWorker {
     public LinearOpenAddressingHashFunctionWorker(final int boxes, final int draws) {
         super(boxes, draws);

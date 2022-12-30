@@ -23,6 +23,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The chaining hash function.
+ * Draws a box index between 1 and number_of_boxes, and increments the balls in the drawn box.
+ * Repeat this n times.
+ * Add to information, all boxes with the maximum balls.
+ *
+ * <br><br>
+ * <u><b>Others HashFunction list:</b></u><br>
+ * - {@link com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker}<br>
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see AbstractHashFunctionWorker
+ * @see DoubleChoiceHashFunctionWorker
+ * @see LinearOpenAddressingHashFunctionWorker
+ * @see QuadraticOpenAddressingHashFunctionWorker
+ * @since 1.0.0
+ */
 public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker {
     public ChainingHashFunctionWorker(final int boxes, final int draws) {
         super(boxes, draws);

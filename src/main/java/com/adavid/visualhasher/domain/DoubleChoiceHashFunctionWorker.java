@@ -19,6 +19,26 @@ package com.adavid.visualhasher.domain;
 
 import java.util.List;
 
+/**
+ * The double choice hash function.
+ * Draws two box indexes between 1 and number_of_boxes, and increments the balls in the box less filled.
+ * Repeat this n times.
+ * Add to information, all boxes with the maximum balls.
+ *
+ * <br><br>
+ * <u><b>Others HashFunction list:</b></u><br>
+ * - {@link com.adavid.visualhasher.domain.ChainingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker}<br>
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see AbstractHashFunctionWorker
+ * @see ChainingHashFunctionWorker
+ * @see LinearOpenAddressingHashFunctionWorker
+ * @see QuadraticOpenAddressingHashFunctionWorker
+ * @since 1.0.0
+ */
 public final class DoubleChoiceHashFunctionWorker extends AbstractHashFunctionWorker {
 
     public DoubleChoiceHashFunctionWorker(final int boxes, final int draws) {

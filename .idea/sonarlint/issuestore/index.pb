@@ -5,8 +5,6 @@
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-X
-(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 |
@@ -43,8 +41,6 @@ Vsrc/main/java/com/adavid/visualhasher/domain/logic/DoubleChoiceHashFunctionWork
 Zsrc/main/java/com/adavid/visualhasher/presentation/view/exception/IllegalHashFunction.java,3\e\3e1f86ca21ff559af945b7828e59c495b7cd82a4
 z
 Jsrc/main/java/com/adavid/visualhasher/presentation/view/component/Box.java,a\b\ab85bc23b274216c808d8b68ba2cf07194593b6b
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 z
 Jsrc/main/java/com/adavid/visualhasher/domain/logic/utility/DrawsRange.java,6\e\6ecd2eff3ebd0e3e787076eb6a792818ae231666
 u

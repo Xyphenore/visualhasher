@@ -17,7 +17,7 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
-import com.adavid.visualhasher.domain.utility.Range;
+import com.adavid.visualhasher.domain.utility.ranges.IntegerRange;
 
 import java.io.Serial;
 
@@ -31,15 +31,15 @@ public final class DrawsOutOfBoundsException extends IllegalArgumentException {
                 "Cannot create a DrawsOutOfBoundsException without a value and an interval." + " Please call a public constructor with a value and an interval.");
     }
 
-    public DrawsOutOfBoundsException(final int value, final Range interval) {
+    public DrawsOutOfBoundsException(final int value, final IntegerRange interval) {
         this(value, interval, null);
     }
 
-    public DrawsOutOfBoundsException(final int value, final Range interval, final Throwable cause) {
+    public DrawsOutOfBoundsException(final int value, final IntegerRange interval, final Throwable cause) {
         super(DrawsOutOfBoundsException.generateErrorMessage(value, interval), cause);
     }
 
-    private static String generateErrorMessage(final int value, final Range interval) {
+    private static String generateErrorMessage(final int value, final IntegerRange interval) {
         if (interval.contains(value)) {
             throw new ValueInBoundsException(value, interval);
         }

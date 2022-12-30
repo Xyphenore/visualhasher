@@ -16,20 +16,16 @@
  */
 
 /**
- * All components used by Workers.
+ * Range package contains the interface Range and IntegerRange implementation.
  *
  * <br><br>
- * <u><b>Utility classes list:</b></u><br>
- * - {@link com.adavid.visualhasher.domain.utility.DrawsRange}<br>
- * - {@link com.adavid.visualhasher.domain.utility.NumberOfBoxes}<br>
- *
- * <br><br>
- * <u><b>Packages list:</b></u><br>
- * - {@link com.adavid.visualhasher.domain.utility.ranges}<br>
+ * <u><b>Range classes list:</b></u><br>
+ * - {@link com.adavid.visualhasher.domain.utility.ranges.IntegerRange}<br>
+ * - {@link com.adavid.visualhasher.domain.utility.ranges.Range}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.domain
+ * @see com.adavid.visualhasher.domain.utility
  * @since 1.0.0
  */
-package com.adavid.visualhasher.domain.utility;
+package com.adavid.visualhasher.domain.utility.ranges;

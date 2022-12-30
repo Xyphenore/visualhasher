@@ -15,37 +15,65 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.domain.utility;
+package com.adavid.visualhasher.domain.utility.ranges;
 
-public final class Range {
+/**
+ * The common implementation of an IntegerRange.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see Range
+ * @see IntegerRange
+ * @since 1.0.0
+ */
+public class CommonIntegerRange implements Range<Integer> {
     private final int min;
     private final int max;
 
-    public Range(final int bound1, final int bound2) {
+    /**
+     * Create a CommonIntegerRange with the two given bounds. Determine the max and the min of the interval.
+     *
+     * @param bound1 Int. The first bound.
+     * @param bound2 Int. The second bound.
+     *
+     * @since 1.0.0
+     */
+    protected CommonIntegerRange(final int bound1, final int bound2) {
         super();
         this.min = Math.min(bound1, bound2);
         this.max = Math.max(bound1, bound2);
     }
 
-    private Range() {
+    private CommonIntegerRange() {
         super();
         throw new UnsupportedOperationException(
-                "Cannot create a range without specified bounds. Please use the public constructor and specified the interval.");
+                "Cannot create a range without specified bounds. Please use the public constructor and specify the interval.");
     }
 
-    public boolean contains(final int value) {
+    @Override
+    public final boolean contains(final Integer value) {
         return Math.max(value, this.min) == Math.min(value, this.max);
     }
 
     @Override
-    public int hashCode() {
-        var result = this.min();
-        result = 31 * result + this.max();
+    public final Integer min() {
+        return this.min;
+    }
+
+    @Override
+    public final Integer max() {
+        return this.max;
+    }
+
+    @Override
+    public final int hashCode() {
+        var result = this.min;
+        result = 31 * result + this.max;
         return result;
     }
 
     @Override
-    public boolean equals(final Object object) {
+    public final boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -53,24 +81,11 @@ public final class Range {
             return false;
         }
 
-        final var range = (Range) object;
+        final var range = (CommonIntegerRange) object;
 
-        if (this.min() != range.min()) {
+        if (this.min != range.min()) {
             return false;
         }
-        return this.max() == range.max();
-    }
-
-    @Override
-    public String toString() {
-        return "Range{" + "min=" + this.min() + ", max=" + this.max() + "}";
-    }
-
-    public int min() {
-        return this.min;
-    }
-
-    public int max() {
-        return this.max;
+        return this.max == range.max();
     }
 }

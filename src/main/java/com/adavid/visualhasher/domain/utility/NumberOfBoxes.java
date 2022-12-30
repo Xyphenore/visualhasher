@@ -19,9 +19,24 @@ package com.adavid.visualhasher.domain.utility;
 
 import com.adavid.visualhasher.domain.exceptions.IllegalNumberOfBoxesException;
 
-public final class NumberOfBoxes {
+import java.util.function.IntSupplier;
+
+/**
+ * A strong type integer, which represent a valid number of boxes.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see DrawsRange
+ * @since 1.0.0
+ */
+public final class NumberOfBoxes implements IntSupplier {
     private final int boxes;
 
+    /**
+     * Create a NumberOfBoxes with the given number of boxes.
+     *
+     * @param boxes Int. The number must be between 2 and the positive integer infinity.
+     */
     public NumberOfBoxes(final int boxes) {
         super();
         if (2 > boxes) {
@@ -31,7 +46,13 @@ public final class NumberOfBoxes {
         this.boxes = boxes;
     }
 
-    int get() {
+    private NumberOfBoxes() {
+        super();
+        throw new UnsupportedOperationException("Cannot create a NumberOfBoxes without the number of boxes. Please " + "call the public contructor with a number of boxes.");
+    }
+
+    @Override
+    public int getAsInt() {
         return this.boxes;
     }
 }

@@ -15,13 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.domain.utility;
-
-import com.adavid.visualhasher.domain.utility.ranges.CommonIntegerRange;
-import com.adavid.visualhasher.domain.utility.ranges.Range;
+package com.adavid.visualhasher.domain.utility.ranges;
 
 /**
- * An interval for number of draws.
+ * An integer interval.
  *
  * @author Axel DAVID
  * @version 1.0.0
@@ -29,27 +26,28 @@ import com.adavid.visualhasher.domain.utility.ranges.Range;
  * @see Range
  * @since 1.0.0
  */
-public final class DrawsRange extends CommonIntegerRange {
+public final class IntegerRange extends CommonIntegerRange {
     /**
-     * Create the interval for draws.
+     * Create an IntegerRange with the two given bounds. Determine the max and the min of the interval.
      *
-     * @param boxes NumberOfBoxes. Number of boxes selected by the user.
+     * @param bound1 Int. The first bound.
+     * @param bound2 Int. The second bound.
      *
      * @since 1.0.0
      */
-    public DrawsRange(final NumberOfBoxes boxes) {
-        super(boxes.getAsInt() / 2, boxes.getAsInt());
+    public IntegerRange(final int bound1, final int bound2) {
+        super(bound1, bound2);
     }
 
-    private DrawsRange() {
+    private IntegerRange() {
         // Necessary to throw an explicit exception
         super(0, 0);
         throw new UnsupportedOperationException(
-                "Cannot create a DrawsRange without specifying the number of boxes. Please use the public constructor " + "and specified " + "the number of boxes.");
+                "Cannot create an IntegerRange without specified bounds. Please use the public constructor and " + "specify the interval.");
     }
 
     @Override
     public String toString() {
-        return "DrawsRange{" + "min=" + this.min() + ", max=" + this.max() + "}";
+        return "IntegerRange{" + "min=" + this.min() + ", max=" + this.max() + "}";
     }
 }

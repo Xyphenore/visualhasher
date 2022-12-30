@@ -15,19 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.view.component;
+package com.adavid.visualhasher.presentation.views;
 
-import com.adavid.visualhasher.view.Constants;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-public final class BoxesSpinner extends JSpinner {
-    public BoxesSpinner() {
-        this(Constants.MIN_BOXES, Constants.MAX_BOXES, Constants.STEP_BOXES);
-    }
-
-    public BoxesSpinner(final int minValue, final int maxValue, final int step) {
-        super(new SpinnerNumberModel(minValue, minValue, maxValue, step));
-    }
+/**
+ * The user presentation of the application.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see com.adavid.visualhasher.Application
+ * @since 1.0.0
+ */
+@FunctionalInterface
+public interface View {
+    /**
+     * Show the view of the application.
+     *
+     * @since 1.0.0
+     */
+    void execute();
 }

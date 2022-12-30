@@ -15,19 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.view;
-
-public interface Constants {
-    int MIN_BOXES = 2;
-    int MAX_BOXES = 10000;
-    int STEP_BOXES = 1;
-
-    int MIN_DRAWS = Constants.MAX_BOXES / 2;
-    int MAX_DRAWS = Constants.MAX_BOXES;
-    int STEP_DRAWS = 1;
-
-    String CHAINING_FUNCTION = "Chaining Hash Function";
-    String DOUBLE_CHOICES = "Double Choices Hash Function";
-    String LINEAR_OPEN_ADDRESSING = "Linear Open Addressing Hash Function";
-    String QUADRATIC_OPEN_ADDRESSING = "Quadratic Open Addressing Hash Function";
-}
+/**
+ * All exceptions needed for the view.
+ *
+ * <br><br>
+ * <u><b>Exceptions list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.views.exceptions.IllegalSelectedHashFunctionException}<br>
+ *
+ * @version 1.0.0
+ * @author Axel DAVID
+ * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @since 1.0.0
+ */
+package com.adavid.visualhasher.presentation.views.exceptions;

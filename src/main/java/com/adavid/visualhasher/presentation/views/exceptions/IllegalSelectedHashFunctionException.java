@@ -15,22 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.view.exception;
+package com.adavid.visualhasher.presentation.views.exceptions;
 
-public class IllegalHashFunction extends IllegalArgumentException {
-    public IllegalHashFunction(final String message) {
+public final class IllegalSelectedHashFunctionException extends IllegalArgumentException {
+    public IllegalSelectedHashFunctionException(final String message) {
         super(message);
     }
 
-    public IllegalHashFunction(final String message, final Throwable cause) {
+    public IllegalSelectedHashFunctionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public IllegalHashFunction(final Throwable cause) {
+    public IllegalSelectedHashFunctionException(final Throwable cause) {
         super(cause);
     }
 
-    public IllegalHashFunction() {
+    public IllegalSelectedHashFunctionException() {
         super();
     }
 }

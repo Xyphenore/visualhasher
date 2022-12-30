@@ -237,7 +237,7 @@ public final class SwingView implements View {
         this.progressBar.setIndeterminate(true);
         this.progressBar.setValue(0);
 
-        final var boxesNumber = (int) this.boxesNb.getValue();
+        final int boxesNumber = this.boxesNb.getValue();
         final var drawsNumber = (int) this.drawsNb.getValue();
         final var function = (String) Objects.requireNonNull(this.hashFunction.getSelectedItem());
 

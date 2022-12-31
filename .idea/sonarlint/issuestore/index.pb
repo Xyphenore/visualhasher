@@ -30,8 +30,6 @@ z
 Jsrc/main/java/com/adavid/visualhasher/presentation/views/package-info.java,e\f\ef52f629b75d2e4f9ee48829842418a3953716ff
 r
 Bsrc/main/java/com/adavid/visualhasher/presentation/views/View.java,7\8\787840ae73a2aa5722ad66b8dfdbd6f330ffc064
-t
-Dsrc/main/java/com/adavid/visualhasher/presentation/package-info.java,e\f\efde10f6aaf8a34ac6a85bbc31fabf12019ed38a
 É
 Ssrc/main/java/com/adavid/visualhasher/domain/utility/ranges/CommonIntegerRange.java,a\2\a283992001f1091d9627fc6536244aa24a50f2aa
 }
@@ -94,12 +92,6 @@ msrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/IllegalSele
 Usrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/package-info.java,a\3\a366a8128967b9d5e74908b846f055c0dac97a70
 Ü
 Vsrc/main/java/com/adavid/visualhasher/domain/exceptions/DrawsOutOfBoundsException.java,2\e\2e00ba9ac34f84a9d5b45c037918cb2a3e0b5c28
-Å
-Qsrc/main/java/com/adavid/visualhasher/presentation/views/components/FileMenu.java,b\7\b7a1258a643e5a5ff2c12e0064324f3d4e0b14ba
-}
-Msrc/main/java/com/adavid/visualhasher/domain/utility/ranges/IntegerRange.java,a\e\ae62647fc4903dcb8e57d7cd0ca271dedf0af64c
-è
-_src/main/java/com/adavid/visualhasher/presentation/views/components/futures/LocaleMenuItem.java,e\a\ea447adbbe4c83f2728e1f285d36ff2c7e3f8e9f
 ç
 ]src/main/java/com/adavid/visualhasher/presentation/views/components/futures/package-info.java,f\1\f11047e2b4ff43bad3b10845a7f7d2acfaf4e216
 É
@@ -108,21 +100,7 @@ Ssrc/main/java/com/adavid/visualhasher/domain/exceptions/ValueInBoundsException.
 Vsrc/main/java/com/adavid/visualhasher/domain/exceptions/ValueOutOfBoundsException.java,4\0\40b6dd4c6b6569285a0ab9dcba0c84bc939dd3c4
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-w
-Gsrc/main/java/com/adavid/visualhasher/domain/utility/NumberOfBoxes.java,1\6\166e0251456e4aedafbaae18904a990f55f5c030
 å
 \src/main/java/com/adavid/visualhasher/domain/exceptions/EmptyFunctionNamesListException.java,c\8\c8dd386fdd437ba1f2866953dc20b9d420bd305d
-t
-Dsrc/main/java/com/adavid/visualhasher/domain/utility/DrawsRange.java,6\0\60d2ebf89fb60fb5ffccb09a860fc0c00d42e301
-ã
-[src/main/java/com/adavid/visualhasher/presentation/views/components/futures/LocaleMenu.java,4\0\40774a8bdf4ca23b95237b179f6ad3b331010c2e
-t
-Dsrc/main/java/com/adavid/visualhasher/domain/HashFunctionResult.java,3\f\3f1da729d7fba3f1970f6720e215a225a865dd6c
 Ö
 Usrc/main/java/com/adavid/visualhasher/domain/exceptions/AlreadyMadeLoopException.java,0\2\02621ab3c85982ae627cb47da1cb7515cc8070e6
-|
-Lsrc/main/java/com/adavid/visualhasher/presentation/views/components/Box.java,e\2\e2182c569fa49c3bf36c59b660996240905fd62f
-Ä
-Psrc/main/java/com/adavid/visualhasher/domain/DoubleChoiceHashFunctionWorker.java,1\1\11a97da05f78e42fc5255516efaa14c47390a57d
-|
-Lsrc/main/java/com/adavid/visualhasher/domain/ChainingHashFunctionWorker.java,1\d\1df072679267cd3b959e4a52c9c777179916e6b7

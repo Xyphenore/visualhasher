@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
+package com.adavid.visualhasher.presentation.views.components.actionmenu;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -23,7 +23,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 /**
- * The run item.
+ * The cancel item.
  *
  * @author Axel DAVID
  * @version 1.0.0
@@ -31,23 +31,23 @@ import java.awt.event.KeyEvent;
  * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class RunItem extends JMenuItem {
+public final class CancelItem extends JMenuItem {
     /**
-     * Create the default run item.
+     * Create the default cancel item.
      *
      * @since 1.0.0
      */
-    public RunItem() {
-        super("Run");
-        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-        super.setActionCommand("run");
-        super.setEnabled(true);
-        super.setToolTipText("Run the selected hash function.");
-        super.setName("run");
+    public CancelItem() {
+        super("Cancel");
+        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+        super.setActionCommand("cancel");
+        super.setEnabled(false);
+        super.setToolTipText("Cancel the computing hash function.");
+        super.setName("cancel");
         super.setVisible(true);
         super.setOpaque(true);
         super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Run");
-        super.getAccessibleContext().setAccessibleDescription("Run the selected hash function.");
+        super.getAccessibleContext().setAccessibleName("Cancel");
+        super.getAccessibleContext().setAccessibleDescription("Cancel the computing hash function.");
     }
 }

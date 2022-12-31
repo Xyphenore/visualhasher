@@ -15,36 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
+package com.adavid.visualhasher.presentation.views.components.actionmenu;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.Serial;
 
 /**
- * Create a quit button for a JMenu.
+ * The run item.
  *
  * @author Axel DAVID
  * @version 1.0.0
+ * @see ActionMenu
  * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class QuitMenuItem extends JMenuItem {
-    @Serial
-    private static final long serialVersionUID = -4118181310071668747L;
-
+public final class RunItem extends JMenuItem {
     /**
-     * Create the default quit menu item.
+     * Create the default run item.
      *
      * @since 1.0.0
      */
-    public QuitMenuItem() {
-        super("Quit");
-        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
-        super.getAccessibleContext().setAccessibleName("Quit");
-        super.getAccessibleContext().setAccessibleDescription("Quit the application.");
-        super.setActionCommand("quit");
+    public RunItem() {
+        super("Run");
+        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
+        super.setActionCommand("run");
+        super.setEnabled(true);
+        super.setToolTipText("Run the selected hash function.");
+        super.setName("run");
+        super.setVisible(true);
+        super.setOpaque(true);
+        super.setHideActionText(false);
+        super.getAccessibleContext().setAccessibleName("Run");
+        super.getAccessibleContext().setAccessibleDescription("Run the selected hash function.");
     }
 }

@@ -15,34 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
-
-import javax.swing.JMenu;
-import java.io.Serial;
-
 /**
- * The action menu.
+ * All components for FileMenu.
  *
- * @author Axel DAVID
+ * <br><br>
+ * <u><b>Components list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.filemenu.QuitMenuItem}<br>
+ *
  * @version 1.0.0
- * @see RunItem
- * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @author Axel DAVID
+ * @see com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu
  * @since 1.0.0
  */
-public final class ActionMenu extends JMenu {
-    @Serial
-    private static final long serialVersionUID = 6693041031716416612L;
-
-    /**
-     * Create the default action menu.
-     *
-     * @since 1.0.0
-     */
-    public ActionMenu() {
-        super("Action");
-        super.getAccessibleContext().setAccessibleName("Action");
-        super.getAccessibleContext().setAccessibleDescription(
-                "Action menu permits running, cancel or re-run the computing of the hash function.");
-
-    }
-}
+package com.adavid.visualhasher.presentation.views.components.filemenu;

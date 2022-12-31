@@ -15,40 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
+package com.adavid.visualhasher.presentation.views.components.filemenu;
 
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import javax.swing.JMenu;
 
 /**
- * The re-run item.
+ * Create a file menu.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see ActionMenu
  * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class ReRunItem extends JMenuItem {
+public final class FileMenu extends JMenu {
     /**
-     * Create the default re-run item.
+     * Create the default file menu.
      *
      * @since 1.0.0
      */
-    public ReRunItem() {
-        super("Re-Run");
-        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
-        super.setActionCommand("re-run");
-        super.setEnabled(false);
-        super.setToolTipText("Cancel the computing hash function, and run the selected hash function.");
-        super.setName("re-run");
-        super.setVisible(true);
-        super.setOpaque(true);
-        super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Re-Run");
+    public FileMenu() {
+        super("File");
+        super.getAccessibleContext().setAccessibleName("File");
         super.getAccessibleContext().setAccessibleDescription(
-                "Cancel the computing hash function, and run the selected hash function.");
+                "File menu permits accessing to settings or exit the application.");
     }
 }

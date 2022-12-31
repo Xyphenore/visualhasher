@@ -15,28 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
-
-import javax.swing.JMenu;
-
 /**
- * Create a file menu.
+ * All components for ActionMenu.
  *
- * @author Axel DAVID
+ * <br><br>
+ * <u><b>Components list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.RunItem}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.ReRunItem}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.CancelItem}<br>
+ *
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @author Axel DAVID
+ * @see com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu
  * @since 1.0.0
  */
-public final class FileMenu extends JMenu {
-    /**
-     * Create the default file menu.
-     *
-     * @since 1.0.0
-     */
-    public FileMenu() {
-        super("File");
-        super.getAccessibleContext().setAccessibleName("File");
-        super.getAccessibleContext().setAccessibleDescription(
-                "File menu permits accessing to settings or exit the application.");
-    }
-}
+package com.adavid.visualhasher.presentation.views.components.actionmenu;

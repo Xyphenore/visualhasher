@@ -17,10 +17,18 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
-import com.adavid.visualhasher.domain.utility.ranges.IntegerRange;
+import com.adavid.visualhasher.domain.utility.DrawsRange;
 
 import java.io.Serial;
 
+/**
+ * Thrown to indicate the number of draws is outside the draw interval.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see com.adavid.visualhasher.domain.AbstractHashFunctionWorker
+ * @since 1.0.0
+ */
 public final class DrawsOutOfBoundsException extends IllegalArgumentException {
     @Serial
     private static final long serialVersionUID = -8849772928383299324L;
@@ -31,15 +39,32 @@ public final class DrawsOutOfBoundsException extends IllegalArgumentException {
                 "Cannot create a DrawsOutOfBoundsException without a value and an interval." + " Please call a public constructor with a value and an interval.");
     }
 
-    public DrawsOutOfBoundsException(final int value, final IntegerRange interval) {
+    /**
+     * Constructs a DrawsOutOfBoundsException with the user value and the draw interval.
+     *
+     * @param value Int. The user draws value.
+     * @param interval DrawsRange. The interval of available draws value.
+     *
+     * @since 1.0.0
+     */
+    public DrawsOutOfBoundsException(final int value, final DrawsRange interval) {
         this(value, interval, null);
     }
 
-    public DrawsOutOfBoundsException(final int value, final IntegerRange interval, final Throwable cause) {
+    /**
+     * Constructs a DrawsOutOfBoundsException with the user value and the draw interval, and the cause.
+     *
+     * @param value Int. The user draws value.
+     * @param interval DrawsRange. The interval of available draws value.
+     * @param cause Throwable. The cause.
+     *
+     * @since 1.0.0
+     */
+    public DrawsOutOfBoundsException(final int value, final DrawsRange interval, final Throwable cause) {
         super(DrawsOutOfBoundsException.generateErrorMessage(value, interval), cause);
     }
 
-    private static String generateErrorMessage(final int value, final IntegerRange interval) {
+    private static String generateErrorMessage(final int value, final DrawsRange interval) {
         if (interval.contains(value)) {
             throw new ValueInBoundsException(value, interval);
         }

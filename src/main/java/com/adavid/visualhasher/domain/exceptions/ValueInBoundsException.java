@@ -17,10 +17,19 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
-import com.adavid.visualhasher.domain.utility.ranges.IntegerRange;
+import com.adavid.visualhasher.domain.utility.ranges.CommonIntegerRange;
 
 import java.io.Serial;
 
+/**
+ * Thrown to indicate the value is inside the interval, but the program indicates the value is outside.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see com.adavid.visualhasher.domain.exceptions.DrawsOutOfBoundsException
+ * @see com.adavid.visualhasher.domain.exceptions.ValueOutOfBoundsException
+ * @since 1.0.0
+ */
 final class ValueInBoundsException extends IllegalArgumentException {
     @Serial
     private static final long serialVersionUID = -2022885818925304387L;
@@ -31,15 +40,32 @@ final class ValueInBoundsException extends IllegalArgumentException {
                 "Cannot create a ValueInBoundsException without a value and an interval. Please call a public constructor with the value and the interval.");
     }
 
-    ValueInBoundsException(final int value, final IntegerRange interval) {
+    /**
+     * Constructs a ValueInBoundsException with the value and the interval.
+     *
+     * @param value Int. The value seems to be outside.
+     * @param interval CommonIntegerRange. The interval of available values.
+     *
+     * @since 1.0.0
+     */
+    ValueInBoundsException(final int value, final CommonIntegerRange interval) {
         this(value, interval, null);
     }
 
-    ValueInBoundsException(final int value, final IntegerRange interval, final Throwable cause) {
+    /**
+     * Constructs a ValueInBoundsException with the value and the interval.
+     *
+     * @param value Int. The value seems to be outside.
+     * @param interval CommonIntegerRange. The interval of available values.
+     * @param cause Throwable. The cause.
+     *
+     * @since 1.0.0
+     */
+    ValueInBoundsException(final int value, final CommonIntegerRange interval, final Throwable cause) {
         super(ValueInBoundsException.generateErrorMessage(value, interval), cause);
     }
 
-    private static String generateErrorMessage(final int value, final IntegerRange interval) {
+    private static String generateErrorMessage(final int value, final CommonIntegerRange interval) {
         if (!interval.contains(value)) {
             throw new ValueOutOfBoundsException(value, interval);
         }

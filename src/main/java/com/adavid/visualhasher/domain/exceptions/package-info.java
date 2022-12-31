@@ -26,7 +26,6 @@
  * - {@link com.adavid.visualhasher.domain.exceptions.EmptyFunctionNamesListException}<br>
  * - {@link com.adavid.visualhasher.domain.exceptions.EmptyStringException}<br>
  * - {@link com.adavid.visualhasher.domain.exceptions.IllegalBoxesListException}<br>
- * - {@link com.adavid.visualhasher.domain.exceptions.IllegalEnumValueException}<br>
  * - {@link com.adavid.visualhasher.domain.exceptions.IllegalFunctionNamesListException}<br>
  * - {@link com.adavid.visualhasher.domain.exceptions.IllegalInformationException}<br>
  * - {@link com.adavid.visualhasher.domain.exceptions.IllegalNumberOfBoxesException}<br>

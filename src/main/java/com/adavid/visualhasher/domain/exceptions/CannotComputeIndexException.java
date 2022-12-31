@@ -20,57 +20,57 @@ package com.adavid.visualhasher.domain.exceptions;
 import java.io.Serial;
 
 /**
- * Thrown to indicate that the Enum's constructor has been passed an invalid value.
+ * Thrown to indicate, the quadratic open addressing hash function cannot compute an available index for a ball.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.components.HashFunctionSelector.HashFunctions
+ * @see com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker
  * @since 1.0.0
  */
-public final class IllegalEnumValueException extends IllegalArgumentException {
+public final class CannotComputeIndexException extends Exception {
     @Serial
-    private static final long serialVersionUID = 1972061189889519746L;
+    private static final long serialVersionUID = -3075172788554142624L;
 
     /**
-     * Constructs an IllegalEnumValueException with no detail message and no cause.
+     * Constructs a CannotComputeIndexException with no detail message and no cause.
      *
      * @since 1.0.0
      */
-    public IllegalEnumValueException() {
+    public CannotComputeIndexException() {
         super();
     }
 
     /**
-     * Constructs an IllegalEnumValueException with the specified detail message.
+     * Constructs a CannotComputeIndexException with the specified detail message.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      *
      * @since 1.0.0
      */
-    public IllegalEnumValueException(final String message) {
+    public CannotComputeIndexException(final String message) {
         super(message);
     }
 
     /**
-     * Constructs an IllegalEnumValueException with the specified detail message and cause.
+     * Constructs a CannotComputeIndexException with the specified detail message and cause.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalEnumValueException(final String message, final Throwable cause) {
+    public CannotComputeIndexException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructs an IllegalEnumValueException with the specified cause.
+     * Constructs a CannotComputeIndexException with the specified cause.
      *
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalEnumValueException(final Throwable cause) {
+    public CannotComputeIndexException(final Throwable cause) {
         super(cause);
     }
 }

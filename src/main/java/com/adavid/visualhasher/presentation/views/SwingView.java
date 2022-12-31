@@ -26,20 +26,20 @@ import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.infrastructure.Configuration;
-import com.adavid.visualhasher.presentation.views.components.Box;
-import com.adavid.visualhasher.presentation.views.components.HashFunctionSelector;
 import com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu;
 import com.adavid.visualhasher.presentation.views.components.actionmenu.CancelItem;
 import com.adavid.visualhasher.presentation.views.components.actionmenu.ReRunItem;
 import com.adavid.visualhasher.presentation.views.components.actionmenu.RunItem;
+import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
 import com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu;
 import com.adavid.visualhasher.presentation.views.components.filemenu.QuitMenuItem;
-import com.adavid.visualhasher.presentation.views.components.futures.AboutMenuItem;
-import com.adavid.visualhasher.presentation.views.components.futures.HelpMenu;
-import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenu;
+import com.adavid.visualhasher.presentation.views.components.futures.helpmenu.AboutMenuItem;
+import com.adavid.visualhasher.presentation.views.components.futures.helpmenu.HelpMenu;
+import com.adavid.visualhasher.presentation.views.components.futures.locales.LocaleMenu;
+import com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector;
+import com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.IllegalSelectedHashFunctionException;
 import com.adavid.visualhasher.presentation.views.components.spinners.BoxesSpinner;
 import com.adavid.visualhasher.presentation.views.components.spinners.DrawsSpinner;
-import com.adavid.visualhasher.presentation.views.exceptions.IllegalSelectedHashFunctionException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -315,9 +315,9 @@ public final class SwingView implements View {
 
                         System.out.println(result.information());
                         final class Output extends Thread {
-                            private final Collection<Box> boxes;
+                            private final Collection<NumberBox> boxes;
 
-                            private Output(final List<Box> boxes) {
+                            private Output(final List<NumberBox> boxes) {
                                 super();
                                 this.boxes = new Vector<>(boxes);
 

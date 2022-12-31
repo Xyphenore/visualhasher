@@ -20,8 +20,8 @@
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.views.components.Box}<br>
- * - {@link com.adavid.visualhasher.presentation.views.components.HashFunctionSelector}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.boxes.NumberBox}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector}<br>
  *
  * <br><br>
  * <u><b>Packages list:</b></u><br>

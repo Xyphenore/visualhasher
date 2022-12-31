@@ -24,18 +24,12 @@ Fsrc/main/java/com/adavid/visualhasher/infrastructure/package-info.java,3\0\30b
 Psrc/main/java/com/adavid/visualhasher/presentation/controllers/package-info.java,a\3\a3ab984ae85b150c036d6ab3b7ca6696936bd348
 ç
 ]src/main/java/com/adavid/visualhasher/presentation/views/components/HashFunctionSelector.java,e\0\e00296464c67c7cb7fddca1b6f15880ed1e9c57f
-Ö
-Usrc/main/java/com/adavid/visualhasher/presentation/views/components/package-info.java,e\e\eed7641e96e859ec19691ff3d14762727d2182f2
 z
 Jsrc/main/java/com/adavid/visualhasher/presentation/views/package-info.java,e\f\ef52f629b75d2e4f9ee48829842418a3953716ff
 r
 Bsrc/main/java/com/adavid/visualhasher/presentation/views/View.java,7\8\787840ae73a2aa5722ad66b8dfdbd6f330ffc064
-É
-Ssrc/main/java/com/adavid/visualhasher/domain/utility/ranges/CommonIntegerRange.java,a\2\a283992001f1091d9627fc6536244aa24a50f2aa
 }
 Msrc/main/java/com/adavid/visualhasher/domain/utility/ranges/package-info.java,b\8\b8ac4cef80cd0ec42337056635c005d97dc5e900
-v
-Fsrc/main/java/com/adavid/visualhasher/domain/utility/ranges/Range.java,3\5\35d1287d79ddc5699d167a13b586aabdbdc1eb43
 v
 Fsrc/main/java/com/adavid/visualhasher/domain/utility/package-info.java,3\6\367d91d7cc9332482facac4661dad4fa04e5a8e8
 f
@@ -92,8 +86,6 @@ msrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/IllegalSele
 Usrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/package-info.java,a\3\a366a8128967b9d5e74908b846f055c0dac97a70
 Ü
 Vsrc/main/java/com/adavid/visualhasher/domain/exceptions/DrawsOutOfBoundsException.java,2\e\2e00ba9ac34f84a9d5b45c037918cb2a3e0b5c28
-ç
-]src/main/java/com/adavid/visualhasher/presentation/views/components/futures/package-info.java,f\1\f11047e2b4ff43bad3b10845a7f7d2acfaf4e216
 É
 Ssrc/main/java/com/adavid/visualhasher/domain/exceptions/ValueInBoundsException.java,3\7\371c1abf48eeb061edea07f63d39956a0511793d
 Ü

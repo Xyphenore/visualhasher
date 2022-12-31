@@ -56,6 +56,7 @@ import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
@@ -129,7 +130,8 @@ public final class SwingView implements View {
         this.runButton.setFocusable(true);
         this.runButton.setName("runButton");
         this.runButton.setOpaque(true);
-        this.runButton.setToolTipText("Run the selected hash function with provided number of boxes and number of " + "draws.");
+        this.runButton.setToolTipText(
+                "Run the selected hash function with provided number of boxes and number of draws.");
         this.runButton.setHideActionText(false);
         this.runButton.setActionCommand("run");
 
@@ -139,7 +141,7 @@ public final class SwingView implements View {
         this.reRunButton.setName("reRunButton");
         this.reRunButton.setOpaque(true);
         this.reRunButton.setToolTipText(
-                "Stop the running operation, and run the selected hash function with provided number of boxes and number of draws.");
+                "Stop the running operation and run the selected hash function with provided number of boxes and number of draws.");
         this.reRunButton.setHideActionText(false);
         this.reRunButton.setActionCommand("re-run");
 
@@ -292,7 +294,7 @@ public final class SwingView implements View {
                                                                                                                  drawsNumber
             );
             default -> throw new IllegalSelectedHashFunctionException(
-                    "The selected hash function is invalid. The selected value : " + hashFunction);
+                    "The selected hash function is invalid. The selected value : " + this.hashFunction);
         };
 
         this.hashFunctionWorker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
@@ -312,10 +314,11 @@ public final class SwingView implements View {
                         //                        result.boxes().forEach(this.boxesPanel::add);
 
                         System.out.println(result.information());
-                        class Output extends Thread {
-                            private final Vector<Box> boxes;
+                        final class Output extends Thread {
+                            private final Collection<Box> boxes;
 
-                            public Output(final List<Box> boxes) {
+                            private Output(final List<Box> boxes) {
+                                super();
                                 this.boxes = new Vector<>(boxes);
 
                             }
@@ -325,7 +328,7 @@ public final class SwingView implements View {
                             }
                         }
                         //                        result.boxes().parallelStream().forEach(System.out::println);
-                        new Output(result.boxes()).run();
+                        new Output(result.boxes()).start();
 
                         final var box = result.boxes().get(0);
                         this.boxesPanel.add(box);
@@ -370,7 +373,7 @@ public final class SwingView implements View {
      * @implNote For v1.1.0
      * @since 1.1.0
      */
-    private void addLanguageMenu(final JMenu fileMenu) {
+    private static void addLanguageMenu(final JMenu fileMenu) {
         final var notNullMenu = Objects.requireNonNull(fileMenu, "The file menu is null. Please give a menu not null.");
 
         final var languages = new LocaleMenu();
@@ -383,12 +386,12 @@ public final class SwingView implements View {
      * For the v1.1.0
      *
      * @param bar JMenuBar. The menu bar.
-     * @param frame JFrame. The frame where the about dialog was open.
+     * @param frame JFrame. The frame where the about's dialog show.
      *
      * @implNote For v1.1.0
      * @since 1.1.0
      */
-    private void addHelpMenu(final JMenuBar bar, final JFrame frame) {
+    private static void addHelpMenu(final JMenuBar bar, final JFrame frame) {
         final var notNullMenu = Objects.requireNonNull(bar, "The menu bar is null. Please give a menu not null.");
         final var notNullFrame = Objects.requireNonNull(frame, "The frame is null. Please give a frame not null.");
 
@@ -408,7 +411,7 @@ public final class SwingView implements View {
                 aboutDialog.setMinimumSize(new Dimension(480, 360));
                 aboutDialog.setMaximumSize(new Dimension(480, 360));
 
-                final var title = new JTextArea("VisualHasher - v" + Configuration.VERSION);
+                final var title = new JTextArea("VisualHasher – v" + Configuration.VERSION);
                 final var information = new JTextArea("Show the repartition of different hash functions for " + "customizable number of boxes and number of draws." + " ");
                 final var license = new JTextArea("VisualHasher Copyright (C) 2022-2023 DAVID Axel - GPLv3");
 

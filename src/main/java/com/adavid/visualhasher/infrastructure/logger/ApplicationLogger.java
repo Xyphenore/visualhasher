@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.infrastructure;
+package com.adavid.visualhasher.infrastructure.logger;
 
 import com.adavid.visualhasher.domain.exceptions.BlankStringException;
 import com.adavid.visualhasher.domain.exceptions.EmptyStringException;

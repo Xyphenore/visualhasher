@@ -16,19 +16,11 @@
  */
 
 /**
- * All components needed for the presentation, domain and application.
- *
- * <br><br>
- * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.infrastructure.Configuration}<br>
- * - {@link com.adavid.visualhasher.infrastructure.logger.ApplicationLogger}<br>
- * - {@link com.adavid.visualhasher.infrastructure.Language} (for v1.1.0)<br>
+ * All components for ApplicationLogger.
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation
- * @see com.adavid.visualhasher.domain
- * @see com.adavid.visualhasher.application
+ * @see com.adavid.visualhasher.infrastructure.logger.ApplicationLogger
  * @since 1.0.0
  */
-package com.adavid.visualhasher.infrastructure;
+package com.adavid.visualhasher.infrastructure.logger;

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.infrastructure;
+package com.adavid.visualhasher.infrastructure.logger;
 
 import java.io.Serial;
 
@@ -24,7 +24,7 @@ import java.io.Serial;
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.infrastructure.ApplicationLogger
+ * @see ApplicationLogger
  * @since 1.0.0
  */
 public final class IllegalLoggerNameException extends IllegalArgumentException {

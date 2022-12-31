@@ -60,8 +60,6 @@ Qsrc/main/java/com/adavid/visualhasher/domain/exceptions/BlankStringException.ja
 Xsrc/main/java/com/adavid/visualhasher/domain/exceptions/CannotComputeIndexException.java,7\8\78e4ca65b3f8bc897e4e9dd68c29e307eb820bf8
 y
 Isrc/main/java/com/adavid/visualhasher/domain/exceptions/package-info.java,e\d\ed9c5ae50b22332c36ff6e8c1b3e0d8c61cf4d67
-k
-;src/main/java/com/adavid/visualhasher/SwingApplication.java,7\8\78cdb263d69d80d41dd04706002b6dd38e6a73fd
 |
 Lsrc/main/java/com/adavid/visualhasher/domain/AbstractHashFunctionWorker.java,f\b\fbeadf068ec52273637cbd0a1eee90672923f49a
 ‰
@@ -94,5 +92,3 @@ Vsrc/main/java/com/adavid/visualhasher/domain/exceptions/ValueOutOfBoundsExcepti
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 Œ
 \src/main/java/com/adavid/visualhasher/domain/exceptions/EmptyFunctionNamesListException.java,c\8\c8dd386fdd437ba1f2866953dc20b9d420bd305d
-…
-Usrc/main/java/com/adavid/visualhasher/domain/exceptions/AlreadyMadeLoopException.java,0\2\02621ab3c85982ae627cb47da1cb7515cc8070e6

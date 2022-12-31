@@ -40,7 +40,7 @@ public final class NumberOfBoxes implements IntSupplier {
     public NumberOfBoxes(final int boxes) {
         super();
         if (2 > boxes) {
-            throw new IllegalNumberOfBoxesException("Cannot create a NumberOfBoxes with an invalid number of boxes. " + "Value: " + boxes + ", min: 2, max: inf. Please give a " + "value between 2 and the positive integer infinity.");
+            throw new IllegalNumberOfBoxesException("Cannot create a NumberOfBoxes with an invalid number of boxes. " + "Value: " + boxes + ", min: 2, max: inf. Please give a value between 2 and the positive integer infinity.");
         }
 
         this.boxes = boxes;
@@ -48,7 +48,7 @@ public final class NumberOfBoxes implements IntSupplier {
 
     private NumberOfBoxes() {
         super();
-        throw new UnsupportedOperationException("Cannot create a NumberOfBoxes without the number of boxes. Please " + "call the public contructor with a number of boxes.");
+        throw new UnsupportedOperationException("Cannot create a NumberOfBoxes without the number of boxes. Please " + "call the public constructor with a number of boxes.");
     }
 
     @Override

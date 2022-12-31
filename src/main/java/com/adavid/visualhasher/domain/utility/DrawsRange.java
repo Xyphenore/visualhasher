@@ -45,7 +45,7 @@ public final class DrawsRange extends CommonIntegerRange {
         // Necessary to throw an explicit exception
         super(0, 0);
         throw new UnsupportedOperationException(
-                "Cannot create a DrawsRange without specifying the number of boxes. Please use the public constructor " + "and specified " + "the number of boxes.");
+                "Cannot create a DrawsRange without specifying the number of boxes. Please use the public constructor and specify the number of boxes.");
     }
 
     @Override

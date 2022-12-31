@@ -43,7 +43,7 @@ public final class IntegerRange extends CommonIntegerRange {
         // Necessary to throw an explicit exception
         super(0, 0);
         throw new UnsupportedOperationException(
-                "Cannot create an IntegerRange without specified bounds. Please use the public constructor and " + "specify the interval.");
+                "Cannot create an IntegerRange without specified bounds. Please use the public constructor and specify the interval.");
     }
 
     @Override

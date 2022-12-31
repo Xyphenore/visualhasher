@@ -37,6 +37,6 @@ public final class FileMenu extends JMenu {
         super("File");
         super.getAccessibleContext().setAccessibleName("File");
         super.getAccessibleContext().setAccessibleDescription(
-                "File menu permits to access to settings or exit the application.");
+                "File menu permits accessing to settings or exit the application.");
     }
 }

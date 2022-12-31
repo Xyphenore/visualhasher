@@ -64,7 +64,7 @@ public final class LocaleMenu extends JMenu {
 
         try {
             final var notNullList = Objects.requireNonNull(names,
-                                                           "The list of locales is null. Please give a list " + "not null."
+                                                           "The list of locales is null. Please give a list not null."
                                                           );
 
             if (notNullList.isEmpty()) {
@@ -78,7 +78,7 @@ public final class LocaleMenu extends JMenu {
                 final var selected = 0 == i;
 
                 final var localItem = new LocaleMenuItem(names.get(i), selected);
-                languageGroup.add(localItem);
+                this.languageGroup.add(localItem);
                 super.add(localItem);
             }
 

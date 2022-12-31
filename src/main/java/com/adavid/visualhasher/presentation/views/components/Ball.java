@@ -15,21 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.domain.exceptions;
+package com.adavid.visualhasher.presentation.views.components;
 
-import com.adavid.visualhasher.domain.HashFunctionResult;
-
-/**
- * Error message constants used by exceptions.
- *
- * @author Axel DAVID
- * @version 1.0.0
- * @see HashFunctionResult
- * @see com.adavid.visualhasher.domain.exceptions
- * @since 1.0.0
- */
-public interface ErrorMessage {
-    // TODO use a configuration file
-    String INVALID_INFORMATION = "Cannot create the HashFunctionResult the given information is invalid.";
-    String INVALID_BOXES_LIST = "Cannot create the HashFunctionResult, the given list of boxes is invalid.";
+public class Ball {
 }

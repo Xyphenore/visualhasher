@@ -25,7 +25,7 @@ import java.io.Serial;
 public final class Box extends JPanel {
     @Serial
     private static final long serialVersionUID = 5342606245543315329L;
-    public static Color DEFAULT_COLOR = Color.GREEN;
+    public static final Color DEFAULT_COLOR = Color.GREEN;
     private final JTextArea idField;
     private final JTextArea ballsNumber;
     private JPanel ballsPanel;
@@ -36,6 +36,7 @@ public final class Box extends JPanel {
     }
 
     public Box(final int balls) {
+        super();
         this.balls = balls;
 
         this.idField = new JTextArea("0");
@@ -115,7 +116,7 @@ public final class Box extends JPanel {
     public void decrementBalls() {
         if (0 >= this.balls) {
             throw new RuntimeException(
-                    "Cannot decremente the number of balls. The number of balls must be over or equal to zero.");
+                    "Cannot decrease the number of balls. The number of balls must be over or equal to zero.");
         }
         --this.balls;
         this.ballsNumber.setText(String.valueOf(this.balls));
@@ -132,12 +133,12 @@ public final class Box extends JPanel {
 
     }
 
-    @Override
-    public String toString() {
-        return "Box{balls=" + this.balls + "}";
-    }
-
     public enum Color {
         RED, GREEN
+    }
+
+    @Override
+    public String toString() {
+        return "Box{" + "idField=" + idField + ", ballsNumber=" + ballsNumber + ", ballsPanel=" + ballsPanel + ", balls=" + balls + '}';
     }
 }

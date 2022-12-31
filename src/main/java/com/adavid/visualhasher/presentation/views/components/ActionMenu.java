@@ -33,7 +33,7 @@ public final class ActionMenu extends JMenu {
         super("Action");
         super.getAccessibleContext().setAccessibleName("Action");
         super.getAccessibleContext().setAccessibleDescription(
-                "Action menu permits to run, cancel or re-run the computing of the hash function.");
+                "Action menu permits running, cancel or re-run the computing of the hash function.");
 
     }
 }

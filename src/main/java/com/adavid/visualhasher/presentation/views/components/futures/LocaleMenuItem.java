@@ -37,7 +37,7 @@ public final class LocaleMenuItem extends JRadioButtonMenuItem {
     /**
      * Create a not selected LocaleMenuItem with the given name.
      *
-     * @param name String. The locale name. The name must not be null, empty or blank.
+     * @param name String. The locale's name. The name must not be null, empty or blank.
      *
      * @since 1.0.0
      */
@@ -48,7 +48,7 @@ public final class LocaleMenuItem extends JRadioButtonMenuItem {
     /**
      * Create a LocaleMenuItem with the given name, and the state selected.
      *
-     * @param name String. The locale name. The name must not be null, empty or blank.
+     * @param name String. The locale's name. The name must not be null, empty or blank.
      * @param selected Boolean. True, if the locale is in default selected.
      *
      * @since 1.0.0

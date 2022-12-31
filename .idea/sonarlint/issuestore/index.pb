@@ -18,12 +18,6 @@ Csrc/main/java/com/adavid/visualhasher/application/package-info.java,d\0\d0f6af
 Osrc/main/java/com/adavid/visualhasher/application/controllers/package-info.java,1\d\1d152b03f74520ccc3de1253b727e8acc007d588
 r
 Bsrc/main/java/com/adavid/visualhasher/infrastructure/Language.java,f\9\f92d9dd652290db9383f4da3a5b6ce1ed0db1523
-v
-Fsrc/main/java/com/adavid/visualhasher/infrastructure/package-info.java,3\0\30bae462c0047371af0ebe8e294905402833de22
-Ä
-Psrc/main/java/com/adavid/visualhasher/presentation/controllers/package-info.java,a\3\a3ab984ae85b150c036d6ab3b7ca6696936bd348
-ç
-]src/main/java/com/adavid/visualhasher/presentation/views/components/HashFunctionSelector.java,e\0\e00296464c67c7cb7fddca1b6f15880ed1e9c57f
 z
 Jsrc/main/java/com/adavid/visualhasher/presentation/views/package-info.java,e\f\ef52f629b75d2e4f9ee48829842418a3953716ff
 r
@@ -34,8 +28,6 @@ v
 Fsrc/main/java/com/adavid/visualhasher/domain/utility/package-info.java,3\6\367d91d7cc9332482facac4661dad4fa04e5a8e8
 f
 6src/main/java/com/adavid/visualhasher/Application.java,0\6\06dac08848f59899e11e70ac2e83732be45061f2
-w
-Gsrc/main/java/com/adavid/visualhasher/infrastructure/Configuration.java,f\e\fe7e8a33d793595f6fdfb7ef554cd125f8b0b351
 n
 >src/main/java/com/adavid/visualhasher/domain/package-info.java,7\b\7b14adbd88ad0ec708aeea431c9b27338ef199d1
 î
@@ -62,8 +54,6 @@ y
 Isrc/main/java/com/adavid/visualhasher/domain/exceptions/package-info.java,e\d\ed9c5ae50b22332c36ff6e8c1b3e0d8c61cf4d67
 |
 Lsrc/main/java/com/adavid/visualhasher/domain/AbstractHashFunctionWorker.java,f\b\fbeadf068ec52273637cbd0a1eee90672923f49a
-â
-Ysrc/main/java/com/adavid/visualhasher/presentation/views/components/futures/HelpMenu.java,1\5\156e1ccebd1285cfdfae823f72f1d64c83055294
 é
 ^src/main/java/com/adavid/visualhasher/presentation/views/components/futures/AboutMenuItem.java,7\9\797cab11f4ec268e05dc0d20cf264b6189729455
 É
@@ -76,12 +66,8 @@ Psrc/main/java/com/adavid/visualhasher/presentation/views/components/RunItem.jav
 bsrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/EmptyLocalesListException.java,5\a\5a112b705521a4210fb5fd6386def524c09ddab9
 ì
 csrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/IllegalLocaleNameException.java,3\5\35562973a0ec0e04a60e0a180df5c46941612c5e
-î
-dsrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/IllegalLocalesListException.java,b\f\bf046eac3730ec4d358c7c960478b9b450beadb0
 ù
 msrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/IllegalSelectedHashFunctionException.java,8\e\8e655e659eefb299020ff63c49bdc4478fb2bed9
-Ö
-Usrc/main/java/com/adavid/visualhasher/presentation/views/exceptions/package-info.java,a\3\a366a8128967b9d5e74908b846f055c0dac97a70
 Ü
 Vsrc/main/java/com/adavid/visualhasher/domain/exceptions/DrawsOutOfBoundsException.java,2\e\2e00ba9ac34f84a9d5b45c037918cb2a3e0b5c28
 É

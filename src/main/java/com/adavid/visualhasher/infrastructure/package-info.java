@@ -21,7 +21,7 @@
  * <br><br>
  * <u><b>Components list:</b></u><br>
  * - {@link com.adavid.visualhasher.infrastructure.Configuration}<br>
- * - {@link com.adavid.visualhasher.infrastructure.Logger}<br>
+ * - {@link com.adavid.visualhasher.infrastructure.ApplicationLogger}<br>
  * - {@link com.adavid.visualhasher.infrastructure.Language} (for v1.1.0)<br>
  *
  * @version 1.0.0

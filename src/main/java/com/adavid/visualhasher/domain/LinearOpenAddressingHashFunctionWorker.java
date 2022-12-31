@@ -19,7 +19,8 @@ package com.adavid.visualhasher.domain;
 
 import com.adavid.visualhasher.domain.exceptions.AlreadyMadeLoopException;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.presentation.views.components.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.ColoredBox;
+import com.adavid.visualhasher.presentation.views.components.boxes.OpenAddessingBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,11 +74,11 @@ public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFu
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = Collections.synchronizedList(new ArrayList<Box>(boxesSize));
+        final List<ColoredBox> boxes = Collections.synchronizedList(new ArrayList<>(boxesSize));
         var maxBalls = 0;
         final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
-            boxes.add(new Box(0));
+            boxes.add(new OpenAddessingBox(i, false));
         }
 
         final var draws = this.getDraws();
@@ -109,8 +110,8 @@ public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFu
                 break;
             }
 
-            final var color = doLoop ? Box.Color.RED : Box.Color.GREEN;
-            boxes.get(indexBox).incrementBalls(color);
+            final var color = doLoop ? ColoredBox.Color.RED : ColoredBox.Color.GREEN;
+            boxes.get(indexBox).incrementsBalls(color);
 
             if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
                 maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());

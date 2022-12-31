@@ -19,7 +19,8 @@ package com.adavid.visualhasher.domain;
 
 import com.adavid.visualhasher.domain.exceptions.CannotComputeIndexException;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.presentation.views.components.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.ColoredBox;
+import com.adavid.visualhasher.presentation.views.components.boxes.OpenAddessingBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,11 +77,11 @@ public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHas
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = Collections.synchronizedList(new ArrayList<Box>(boxesSize));
+        final var boxes = Collections.synchronizedList(new ArrayList<ColoredBox>(boxesSize));
         var maxBalls = 0;
         final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
-            boxes.add(new Box(0));
+            boxes.add(new OpenAddessingBox(i, false));
         }
 
         final var draws = this.getDraws();
@@ -119,8 +120,8 @@ public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHas
                 }
 
                 if (QuadraticOpenAddressingHashFunctionWorker.MAX_TRY >= delta) {
-                    final var color = 0 == retry && 0 == delta ? Box.Color.GREEN : Box.Color.RED;
-                    boxes.get(indexBox).incrementBalls(color);
+                    final var color = 0 == retry && 0 == delta ? ColoredBox.Color.GREEN : ColoredBox.Color.RED;
+                    boxes.get(indexBox).incrementsBalls(color);
 
                     break;
                 }

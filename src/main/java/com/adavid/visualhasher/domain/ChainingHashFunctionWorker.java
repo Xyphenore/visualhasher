@@ -18,7 +18,7 @@
 package com.adavid.visualhasher.domain;
 
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.presentation.views.components.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,11 +70,11 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = Collections.synchronizedList(new ArrayList<Box>(boxesSize));
+        final var boxes = Collections.synchronizedList(new ArrayList<NumberBox>(boxesSize));
         var maxBalls = 0;
         final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
-            boxes.add(new Box(0));
+            boxes.add(new NumberBox(0));
         }
 
         final var draws = this.getDraws();
@@ -88,7 +88,7 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
 
             final var indexBox = this.compute();
 
-            boxes.get(indexBox).incrementBalls();
+            boxes.get(indexBox).incrementsBalls();
 
             if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
                 maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());

@@ -23,7 +23,8 @@ import com.adavid.visualhasher.domain.exceptions.EmptyStringException;
 import com.adavid.visualhasher.domain.exceptions.IllegalBoxesListException;
 import com.adavid.visualhasher.domain.exceptions.IllegalInformationException;
 import com.adavid.visualhasher.presentation.views.SwingView;
-import com.adavid.visualhasher.presentation.views.components.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ import java.util.List;
  *
  * @param information String. Information about boxes. The hash function can write anything in.
  * The string must not be empty and not filled with blank characters. The string must not be null.
- * @param boxes List{@literal <}Box{@literal >}. Resulting boxes from the computing of the hash function.
+ * @param boxes List{@literal <}NumberBox{@literal >}. Resulting boxes from the computing of the hash function.
  * The list must not be null.
  *
  * @author Axel DAVID
@@ -48,9 +49,9 @@ import java.util.List;
  * String test = new String("TEST");
  *
  * // Create a basic list of boxes
- * List<Box> boxes = new ArrayList<>();
+ * List<NumberBox> boxes = new ArrayList<>();
  * // Create a box with 10 balls in it.
- * Box box = new Box(10);
+ * NumberBox box = new NumberBox(10);
  * // Add the box to the list
  * boxes.add(box);
  *
@@ -72,11 +73,11 @@ import java.util.List;
  * }
  * </pre>
  * @see AbstractHashFunctionWorker
- * @see Box
+ * @see NumberBox
  * @see SwingView
  * @since 1.0.0
  */
-public record HashFunctionResult(String information, List<Box> boxes) {
+public record HashFunctionResult(String information, List<? extends Box> boxes) {
     // TODO use a configuration file
     public static final String INVALID_INFORMATION = "Cannot create the HashFunctionResult the given information is invalid.";
     public static final String INVALID_BOXES_LIST = "Cannot create the HashFunctionResult, the given list of boxes is invalid.";
@@ -86,7 +87,7 @@ public record HashFunctionResult(String information, List<Box> boxes) {
      *
      * @param information String. Information about boxes. The hash function can write anything in.
      * The string must not be empty and not filled with blank characters. The string must not be null.
-     * @param boxes List{@literal <}Box{@literal >}. Resulting boxes from the computing of the hash function.
+     * @param boxes List{@literal <}NumberBox{@literal >}. Resulting boxes from the computing of the hash function.
      * The list must not be null.
      * <br><br>
      * <u><b>Developer's errors:</b></u>

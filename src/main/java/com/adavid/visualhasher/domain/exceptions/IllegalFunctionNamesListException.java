@@ -17,6 +17,8 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
+import com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector;
+
 import java.io.Serial;
 
 /**
@@ -24,7 +26,7 @@ import java.io.Serial;
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.components.HashFunctionSelector
+ * @see HashFunctionSelector
  * @since 1.0.0
  */
 public final class IllegalFunctionNamesListException extends IllegalArgumentException {

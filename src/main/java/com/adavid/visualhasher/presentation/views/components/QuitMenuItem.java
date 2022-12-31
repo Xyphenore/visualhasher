@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 
 /**
  * Create a quit button for a JMenu.
@@ -31,6 +32,14 @@ import java.awt.event.KeyEvent;
  * @since 1.0.0
  */
 public final class QuitMenuItem extends JMenuItem {
+    @Serial
+    private static final long serialVersionUID = -4118181310071668747L;
+
+    /**
+     * Create the default quit menu item.
+     *
+     * @since 1.0.0
+     */
     public QuitMenuItem() {
         super("Quit");
         super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));

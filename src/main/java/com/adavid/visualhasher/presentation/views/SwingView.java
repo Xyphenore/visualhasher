@@ -28,9 +28,7 @@ import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.infrastructure.Configuration;
 import com.adavid.visualhasher.presentation.views.components.ActionMenu;
 import com.adavid.visualhasher.presentation.views.components.Box;
-import com.adavid.visualhasher.presentation.views.components.BoxesSpinner;
 import com.adavid.visualhasher.presentation.views.components.CancelItem;
-import com.adavid.visualhasher.presentation.views.components.DrawsSpinner;
 import com.adavid.visualhasher.presentation.views.components.FileMenu;
 import com.adavid.visualhasher.presentation.views.components.HashFunctionSelector;
 import com.adavid.visualhasher.presentation.views.components.QuitMenuItem;
@@ -39,6 +37,8 @@ import com.adavid.visualhasher.presentation.views.components.RunItem;
 import com.adavid.visualhasher.presentation.views.components.futures.AboutMenuItem;
 import com.adavid.visualhasher.presentation.views.components.futures.HelpMenu;
 import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenu;
+import com.adavid.visualhasher.presentation.views.components.spinners.BoxesSpinner;
+import com.adavid.visualhasher.presentation.views.components.spinners.DrawsSpinner;
 import com.adavid.visualhasher.presentation.views.exceptions.IllegalSelectedHashFunctionException;
 
 import javax.swing.JButton;

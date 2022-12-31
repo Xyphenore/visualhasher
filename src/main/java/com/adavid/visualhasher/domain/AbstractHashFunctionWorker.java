@@ -47,20 +47,20 @@ public abstract class AbstractHashFunctionWorker extends SwingWorker<HashFunctio
     private final int boxes;
     private final int draws;
 
-    protected AbstractHashFunctionWorker(final int boxes, final int draws) {
+    AbstractHashFunctionWorker(final NumberOfBoxes boxes, final int draws) {
         super();
 
         try {
-            final var boxesNumber = new NumberOfBoxes(boxes);
-            final var drawsInterval = new DrawsRange(boxesNumber);
+            final var drawsInterval = new DrawsRange(boxes);
 
             if (!drawsInterval.contains(draws)) {
-                throw new IllegalNumberOfDrawsException("Cannot create an AbstractHashFunctionWorker with an invalid " + "number of draws.",
-                                                        new DrawsOutOfBoundsException(draws, drawsInterval)
+                throw new IllegalNumberOfDrawsException(
+                        "Cannot create an AbstractHashFunctionWorker with an invalid number of draws.",
+                        new DrawsOutOfBoundsException(draws, drawsInterval)
                 );
             }
 
-            this.boxes = boxes;
+            this.boxes = boxes.getAsInt();
             this.draws = draws;
         }
         catch (final IllegalNumberOfBoxesException error) {
@@ -76,11 +76,21 @@ public abstract class AbstractHashFunctionWorker extends SwingWorker<HashFunctio
                 "Cannot create an AbstractHashFunctionWorker without the number of boxes, and the number of draws. Please call the protected constructor with the number of boxes, and the number of draws.");
     }
 
-    protected final int getBoxes() {
+    final int getBoxes() {
         return this.boxes;
     }
 
-    protected final int getDraws() {
+    final int getDraws() {
         return this.draws;
+    }
+
+    /**
+     * Compute a random value between 0, and the number of boxes less 1.
+     *
+     * @return Returns a value in [0, number of boxes - 1]
+     */
+    final int compute() {
+        // noinspection UnsecureRandomNumberGeneration
+        return Math.toIntExact(Math.round(Math.random() * (this.boxes - 1)));
     }
 }

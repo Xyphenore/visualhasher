@@ -17,7 +17,13 @@
 
 package com.adavid.visualhasher.domain;
 
+import com.adavid.visualhasher.domain.exceptions.AlreadyMadeLoopException;
+import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
+import com.adavid.visualhasher.presentation.views.components.Box;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * The linear open addressing hash function.
@@ -42,14 +48,22 @@ import java.util.List;
  * @since 1.0.0
  */
 public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFunctionWorker {
-    public LinearOpenAddressingHashFunctionWorker(final int boxes, final int draws) {
+    /**
+     * Create a LinearOpenAddressingHashFunctionWorker with the NumberOfBoxes, and the number of draws.
+     *
+     * @param boxes NumberOfBoxes. The number of boxes, selected by the user.
+     * @param draws Int. The number of draws, selected by the user.
+     *
+     * @since 1.0.0
+     */
+    public LinearOpenAddressingHashFunctionWorker(final NumberOfBoxes boxes, final int draws) {
         super(boxes, draws);
     }
 
     private LinearOpenAddressingHashFunctionWorker() {
         // Note: Permit creating a valid AbstractWorker
         // To throw after an explicit exception.
-        super(2, 2);
+        super(new NumberOfBoxes(2), 2);
         throw new UnsupportedOperationException(
                 "Cannot create a LinearOpenAddressingHashFunctionWorker without the number of boxes and the number of draws. Please call a public constructor with the number of boxes and the number of draws.");
     }
@@ -57,17 +71,82 @@ public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFu
     @Override
     protected HashFunctionResult doInBackground() throws Exception {
         // TODO use publish method to send data to process
-        // TODO Use setProgress to update the progress
-        return null;
+
+        final int boxesSize = this.getBoxes();
+        final var boxes = new Vector<Box>(boxesSize);
+        var maxBalls = 0;
+        final Collection<Integer> maxBoxesIndexes = new Vector<>();
+        for (var i = 0; i < boxesSize; ++i) {
+            boxes.add(new Box(0));
+        }
+
+        final var draws = this.getDraws();
+
+        this.setProgress(0);
+
+        for (var i = 0; i < draws; ++i) {
+            if (this.isCancelled()) {
+                break;
+            }
+
+            var indexBox = this.compute();
+            final var firstIndex = indexBox;
+            var doLoop = false;
+            while (!this.isCancelled() && 0 != boxes.get(indexBox).getBalls()) {
+                if (!doLoop) {
+                    doLoop = true;
+                }
+
+                indexBox = (indexBox + 1) % boxesSize;
+
+                if (firstIndex == indexBox) {
+                    throw new AlreadyMadeLoopException(
+                            "The computed index is equal to the first index. It is impossible.");
+                }
+            }
+
+            if (this.isCancelled()) {
+                break;
+            }
+
+            final var color = doLoop ? Box.Color.RED : Box.Color.GREEN;
+            boxes.get(indexBox).incrementBalls(color);
+
+            if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
+                maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());
+                maxBoxesIndexes.clear();
+            }
+
+            if (boxes.get(indexBox).getBalls() == maxBalls) {
+                maxBoxesIndexes.add(indexBox);
+            }
+
+            this.setProgress(Math.min(98, i * 100 / draws));
+        }
+
+        if (this.isCancelled()) {
+            return null;
+        }
+
+        this.setProgress(99);
+
+        final var information = new StringBuilder("Most filled boxes (" + maxBalls + " balls): ");
+
+        final var maxBoxesIndexesOrdered = maxBoxesIndexes.parallelStream().sorted().toList();
+        for (final var index : maxBoxesIndexesOrdered) {
+            information.append(index).append(", ");
+        }
+        if (information.toString().endsWith(", ")) {
+            information.setLength(information.length() - 2);
+        }
+
+        this.setProgress(100);
+
+        return new HashFunctionResult(information.toString(), boxes);
     }
 
     @Override
     protected void process(final List<HashFunctionResult> chunks) {
         // TODO Implement
-    }
-
-    @Override
-    protected void done() {
-        // TODO May be implement the function executed after the doInBG
     }
 }

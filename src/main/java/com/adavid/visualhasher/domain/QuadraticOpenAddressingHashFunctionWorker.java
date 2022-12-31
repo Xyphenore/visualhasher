@@ -17,7 +17,13 @@
 
 package com.adavid.visualhasher.domain;
 
+import com.adavid.visualhasher.domain.exceptions.CannotComputeIndexException;
+import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
+import com.adavid.visualhasher.presentation.views.components.Box;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * The quadratic open addressing hash function.
@@ -42,14 +48,25 @@ import java.util.List;
  * @since 1.0.0
  */
 public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHashFunctionWorker {
-    public QuadraticOpenAddressingHashFunctionWorker(final int boxes, final int draws) {
+    private static final int MAX_TRY = 50;
+    private static final int MAX_COMPUTE = 3;
+
+    /**
+     * Create a QuadraticOpenAddressingHashFunctionWorker with the NumberOfBoxes, and the number of draws.
+     *
+     * @param boxes NumberOfBoxes. The number of boxes, selected by the user.
+     * @param draws Int. The number of draws, selected by the user.
+     *
+     * @since 1.0.0
+     */
+    public QuadraticOpenAddressingHashFunctionWorker(final NumberOfBoxes boxes, final int draws) {
         super(boxes, draws);
     }
 
     private QuadraticOpenAddressingHashFunctionWorker() {
         // Note: Permit creating a valid AbstractWorker
         // To throw after an explicit exception.
-        super(2, 2);
+        super(new NumberOfBoxes(2), 2);
         throw new UnsupportedOperationException(
                 "Cannot create a QuadraticOpenAddressingHashFunctionWorker without the number of boxes and the number of draws. Please call a public constructor with the number of boxes and the number of draws.");
     }
@@ -57,17 +74,113 @@ public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHas
     @Override
     protected HashFunctionResult doInBackground() throws Exception {
         // TODO use publish method to send data to process
-        // TODO Use setProgress to update the progress
-        return null;
+
+        final int boxesSize = this.getBoxes();
+        final var boxes = new Vector<Box>(boxesSize);
+        var maxBalls = 0;
+        final Collection<Integer> maxBoxesIndexes = new Vector<>();
+        for (var i = 0; i < boxesSize; ++i) {
+            boxes.add(new Box(0));
+        }
+
+        final var draws = this.getDraws();
+
+        this.setProgress(0);
+
+        final Collection<Integer> firstIndexes = new Vector<>(QuadraticOpenAddressingHashFunctionWorker.MAX_COMPUTE);
+        var retry = 0;
+        var indexBox = 0;
+
+        for (var i = 0; i < draws; ++i) {
+            if (this.isCancelled()) {
+                break;
+            }
+
+            retry = 0;
+            firstIndexes.clear();
+
+            while (!this.isCancelled() && QuadraticOpenAddressingHashFunctionWorker.MAX_COMPUTE > retry) {
+                final var firstIndex = this.compute();
+                firstIndexes.add(firstIndex);
+
+                indexBox = firstIndex;
+                var delta = 0;
+
+                while (!this.isCancelled() && 0 != boxes.get(indexBox)
+                                                        .getBalls() && QuadraticOpenAddressingHashFunctionWorker.MAX_TRY >= delta) {
+                    ++delta;
+
+                    indexBox = (firstIndex + delta * delta) % boxesSize;
+                }
+
+                if (this.isCancelled()) {
+                    break;
+                }
+
+                if (QuadraticOpenAddressingHashFunctionWorker.MAX_TRY >= delta) {
+                    final var color = 0 == retry && 0 == delta ? Box.Color.GREEN : Box.Color.RED;
+                    boxes.get(indexBox).incrementBalls(color);
+
+                    break;
+                }
+
+                ++retry;
+            }
+
+            if (this.isCancelled()) {
+                break;
+            }
+
+            if (QuadraticOpenAddressingHashFunctionWorker.MAX_COMPUTE <= retry) {
+                final var errorMessage = new StringBuilder(
+                        "Cannot compute the box index. Try 50 quadratics increments with this first indexes: ");
+
+                for (final var index : firstIndexes) {
+                    errorMessage.append(index);
+                    errorMessage.append(", ");
+                }
+                if (errorMessage.toString().endsWith(", ")) {
+                    errorMessage.setLength(errorMessage.length() - 2);
+                }
+
+                throw new CannotComputeIndexException(errorMessage.toString());
+            }
+
+            if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
+                maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());
+                maxBoxesIndexes.clear();
+            }
+
+            if (boxes.get(indexBox).getBalls() == maxBalls) {
+                maxBoxesIndexes.add(indexBox);
+            }
+
+            this.setProgress(Math.min(98, i * 100 / draws));
+        }
+
+        if (this.isCancelled()) {
+            return null;
+        }
+
+        this.setProgress(99);
+
+        final var information = new StringBuilder("Most filled boxes (" + maxBalls + " balls): ");
+
+        final var maxBoxesIndexesOrdered = maxBoxesIndexes.parallelStream().sorted().toList();
+        for (final var index : maxBoxesIndexesOrdered) {
+            information.append(index).append(", ");
+        }
+        if (information.toString().endsWith(", ")) {
+            information.setLength(information.length() - 2);
+        }
+
+        this.setProgress(100);
+
+        return new HashFunctionResult(information.toString(), boxes);
     }
 
     @Override
     protected void process(final List<HashFunctionResult> chunks) {
         // TODO Implement
-    }
-
-    @Override
-    protected void done() {
-        // TODO May be implement the function executed after the doInBG
     }
 }

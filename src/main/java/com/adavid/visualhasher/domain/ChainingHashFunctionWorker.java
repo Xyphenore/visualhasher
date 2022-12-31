@@ -17,11 +17,12 @@
 
 package com.adavid.visualhasher.domain;
 
+import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.presentation.views.components.Box;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * The chaining hash function.
@@ -44,14 +45,22 @@ import java.util.List;
  * @since 1.0.0
  */
 public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker {
-    public ChainingHashFunctionWorker(final int boxes, final int draws) {
+    /**
+     * Create a ChainingHashFunctionWorker with the NumberOfBoxes, and the number of draws.
+     *
+     * @param boxes NumberOfBoxes. The number of boxes, selected by the user.
+     * @param draws Int. The number of draws, selected by the user.
+     *
+     * @since 1.0.0
+     */
+    public ChainingHashFunctionWorker(final NumberOfBoxes boxes, final int draws) {
         super(boxes, draws);
     }
 
     private ChainingHashFunctionWorker() {
         // Note: Permit creating a valid AbstractWorker
         // To throw after an explicit exception.
-        super(2, 2);
+        super(new NumberOfBoxes(2), 2);
         throw new UnsupportedOperationException(
                 "Cannot create a ChainingHashFunctionWorker without the number of boxes and the number of draws. Please call a public constructor with the number of boxes and the number of draws.");
     }
@@ -61,32 +70,40 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = new Box[boxesSize];
+        final var boxes = new Vector<Box>(boxesSize);
         var maxBalls = 0;
-        final Collection<Integer> maxBoxesIndexes = new ArrayList<>();
+        final Collection<Integer> maxBoxesIndexes = new Vector<>();
+        for (var i = 0; i < boxesSize; ++i) {
+            boxes.add(new Box(0));
+        }
 
         final var draws = this.getDraws();
 
         this.setProgress(0);
 
         for (var i = 0; i < draws; ++i) {
+            if (this.isCancelled()) {
+                break;
+            }
+
             final var indexBox = this.compute();
 
-            if (null == boxes[indexBox]) {
-                boxes[indexBox] = new Box(0);
-            }
-            boxes[indexBox].incrementBalls();
+            boxes.get(indexBox).incrementBalls();
 
-            if (maxBalls != Math.max(maxBalls, boxes[indexBox].getBalls())) {
-                maxBalls = Math.max(maxBalls, boxes[indexBox].getBalls());
+            if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
+                maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());
                 maxBoxesIndexes.clear();
             }
 
-            if (boxes[indexBox].getBalls() == maxBalls) {
+            if (boxes.get(indexBox).getBalls() == maxBalls) {
                 maxBoxesIndexes.add(indexBox);
             }
 
             this.setProgress(Math.min(98, i * 100 / draws));
+        }
+
+        if (this.isCancelled()) {
+            return null;
         }
 
         this.setProgress(99);
@@ -103,25 +120,11 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
 
         this.setProgress(100);
 
-        return new HashFunctionResult(information.toString(), List.of(boxes));
-    }
-
-    /**
-     * Compute a random value between 0, and the number of boxes less 1.
-     *
-     * @return Returns a value in [0, number of boxes - 1]
-     */
-    private int compute() {
-        return Math.toIntExact(Math.round(Math.random() * (this.getBoxes() - 1)));
+        return new HashFunctionResult(information.toString(), boxes);
     }
 
     @Override
     protected void process(final List<HashFunctionResult> chunks) {
         // TODO Implement
-    }
-
-    @Override
-    protected void done() {
-        // TODO May be implement the function executed after the doInBG
     }
 }

@@ -17,60 +17,62 @@
 
 package com.adavid.visualhasher.presentation.views.exceptions;
 
+import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenuItem;
+
 import java.io.Serial;
 
 /**
- * Thrown to indicate, the user selected hash function is invalid.
+ * Thrown to indicate that the LocaleMenuItem's constructor has been passed an invalid string.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.components.HashFunctionSelector
+ * @see LocaleMenuItem
  * @since 1.0.0
  */
-public final class IllegalSelectedHashFunctionException extends IllegalArgumentException {
+public final class IllegalLocaleNameException extends IllegalArgumentException {
     @Serial
-    private static final long serialVersionUID = -4427002037717978421L;
+    private static final long serialVersionUID = 2637667715857859385L;
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified detail message.
+     * Constructs an IllegalLocaleNameException with no detail message and no cause.
+     *
+     * @since 1.0.0
+     */
+    public IllegalLocaleNameException() {
+        super();
+    }
+
+    /**
+     * Constructs an IllegalLocaleNameException with the specified detail message.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final String message) {
+    public IllegalLocaleNameException(final String message) {
         super(message);
     }
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified detail message and cause.
+     * Constructs an IllegalLocaleNameException with the specified detail message and cause.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final String message, final Throwable cause) {
+    public IllegalLocaleNameException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified cause.
+     * Constructs an IllegalLocaleNameException with the specified cause.
      *
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final Throwable cause) {
+    public IllegalLocaleNameException(final Throwable cause) {
         super(cause);
-    }
-
-    /**
-     * Constructs an IllegalSelectedHashFunctionException with no detail message and no cause.
-     *
-     * @since 1.0.0
-     */
-    public IllegalSelectedHashFunctionException() {
-        super();
     }
 }

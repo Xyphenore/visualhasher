@@ -17,60 +17,62 @@
 
 package com.adavid.visualhasher.presentation.views.exceptions;
 
+import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenu;
+
 import java.io.Serial;
 
 /**
- * Thrown to indicate, the user selected hash function is invalid.
+ * Thrown to indicate that the LocaleMenu's constructor has been passed an empty locale list.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.components.HashFunctionSelector
+ * @see LocaleMenu
  * @since 1.0.0
  */
-public final class IllegalSelectedHashFunctionException extends IllegalArgumentException {
+public final class EmptyLocalesListException extends IllegalArgumentException {
     @Serial
-    private static final long serialVersionUID = -4427002037717978421L;
+    private static final long serialVersionUID = 116778499859640358L;
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified detail message.
+     * Constructs an EmptyLocalesListException with no detail message and no cause.
+     *
+     * @since 1.0.0
+     */
+    public EmptyLocalesListException() {
+        super();
+    }
+
+    /**
+     * Constructs an EmptyLocalesListException with the specified detail message.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final String message) {
+    public EmptyLocalesListException(final String message) {
         super(message);
     }
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified detail message and cause.
+     * Constructs an EmptyLocalesListException with the specified detail message and cause.
      *
      * @param message String. Specified detail message. The message should be filled with a useful message.
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final String message, final Throwable cause) {
+    public EmptyLocalesListException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructs an IllegalSelectedHashFunctionException with the specified cause.
+     * Constructs an EmptyLocalesListException with the specified cause.
      *
      * @param cause Throwable. The cause of the exception.
      *
      * @since 1.0.0
      */
-    public IllegalSelectedHashFunctionException(final Throwable cause) {
+    public EmptyLocalesListException(final Throwable cause) {
         super(cause);
-    }
-
-    /**
-     * Constructs an IllegalSelectedHashFunctionException with no detail message and no cause.
-     *
-     * @since 1.0.0
-     */
-    public IllegalSelectedHashFunctionException() {
-        super();
     }
 }

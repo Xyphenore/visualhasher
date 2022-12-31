@@ -17,5 +17,12 @@
 
 package com.adavid.visualhasher.presentation.controllers;
 
-public final class MainController implements Controller {
+/**
+ * The SwingInputController.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public final class SwingInputController implements InputController {
 }

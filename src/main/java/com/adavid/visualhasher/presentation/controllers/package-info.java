@@ -20,8 +20,8 @@
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.controllers.Controller}<br>
- * - {@link com.adavid.visualhasher.presentation.controllers.MainController}<br>
+ * - {@link com.adavid.visualhasher.presentation.controllers.InputController}<br>
+ * - {@link com.adavid.visualhasher.presentation.controllers.SwingInputController}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID

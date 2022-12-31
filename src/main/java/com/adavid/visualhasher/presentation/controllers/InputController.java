@@ -17,5 +17,13 @@
 
 package com.adavid.visualhasher.presentation.controllers;
 
-public interface Controller {
+/**
+ * InputController interface.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see SwingInputController
+ * @since 1.0.0
+ */
+interface InputController {
 }

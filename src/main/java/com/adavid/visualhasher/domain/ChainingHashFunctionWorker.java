@@ -20,9 +20,9 @@ package com.adavid.visualhasher.domain;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.presentation.views.components.Box;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * The chaining hash function.
@@ -62,7 +62,7 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
         // To throw after an explicit exception.
         super(new NumberOfBoxes(2), 2);
         throw new UnsupportedOperationException(
-                "Cannot create a ChainingHashFunctionWorker without the number of boxes and the number of draws. Please call a public constructor with the number of boxes and the number of draws.");
+                "Cannot create a ChainingHashFunctionWorker without the number of boxes, and the number of draws. Please call a public constructor with the number of boxes, and the number of draws.");
     }
 
     @Override
@@ -70,9 +70,9 @@ public final class ChainingHashFunctionWorker extends AbstractHashFunctionWorker
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = new Vector<Box>(boxesSize);
+        final var boxes = Collections.synchronizedList(new ArrayList<Box>(boxesSize));
         var maxBalls = 0;
-        final Collection<Integer> maxBoxesIndexes = new Vector<>();
+        final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
             boxes.add(new Box(0));
         }

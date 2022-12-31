@@ -20,7 +20,6 @@ package com.adavid.visualhasher.domain;
 import com.adavid.visualhasher.domain.exceptions.BlankStringException;
 import com.adavid.visualhasher.domain.exceptions.EmptyBoxesListException;
 import com.adavid.visualhasher.domain.exceptions.EmptyStringException;
-import com.adavid.visualhasher.domain.exceptions.ErrorMessage;
 import com.adavid.visualhasher.domain.exceptions.IllegalBoxesListException;
 import com.adavid.visualhasher.domain.exceptions.IllegalInformationException;
 import com.adavid.visualhasher.presentation.views.SwingView;
@@ -78,6 +77,10 @@ import java.util.List;
  * @since 1.0.0
  */
 public record HashFunctionResult(String information, List<Box> boxes) {
+    // TODO use a configuration file
+    public static final String INVALID_INFORMATION = "Cannot create the HashFunctionResult the given information is invalid.";
+    public static final String INVALID_BOXES_LIST = "Cannot create the HashFunctionResult, the given list of boxes is invalid.";
+
     /**
      * Build a result of a hash function with information, and the list of result.
      *
@@ -96,21 +99,21 @@ public record HashFunctionResult(String information, List<Box> boxes) {
     public HashFunctionResult {
         if (null == information) {
             throw new IllegalInformationException(
-                    ErrorMessage.INVALID_INFORMATION,
+                    INVALID_INFORMATION,
                     new NullPointerException("The string 'information' is null. The string must not be null.")
             );
         }
 
         if (information.isEmpty()) {
             throw new IllegalInformationException(
-                    ErrorMessage.INVALID_INFORMATION,
+                    INVALID_INFORMATION,
                     new EmptyStringException("The string 'information' is empty. The string must not be empty.")
             );
         }
 
         if (information.isBlank()) {
             throw new IllegalInformationException(
-                    ErrorMessage.INVALID_INFORMATION,
+                    INVALID_INFORMATION,
                     new BlankStringException(
                             "The string 'information' is filled with blanked characters. The string must be filled with not blank characters.")
             );
@@ -118,20 +121,20 @@ public record HashFunctionResult(String information, List<Box> boxes) {
 
         if (null == boxes) {
             throw new IllegalBoxesListException(
-                    ErrorMessage.INVALID_BOXES_LIST,
+                    INVALID_BOXES_LIST,
                     new NullPointerException("The list of boxes is null. The list must not be null.")
             );
         }
 
         if (boxes.isEmpty()) {
             throw new IllegalBoxesListException(
-                    ErrorMessage.INVALID_BOXES_LIST,
+                    INVALID_BOXES_LIST,
                     new EmptyBoxesListException("The list of boxes is empty. The list must not be empty.")
             );
         }
 
         if (2 > boxes.size()) {
-            throw new IllegalBoxesListException(ErrorMessage.INVALID_BOXES_LIST + " The list of boxes has only " + boxes.size() + " box. The list" + " of boxes must have 2 or more boxes.");
+            throw new IllegalBoxesListException(INVALID_BOXES_LIST + " The list of boxes has only " + boxes.size() + " boxes. The list of boxes must have 2 or more boxes.");
         }
     }
 }

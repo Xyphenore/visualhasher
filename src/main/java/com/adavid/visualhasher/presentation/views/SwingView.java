@@ -26,33 +26,39 @@ import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.infrastructure.Configuration;
+import com.adavid.visualhasher.presentation.views.components.ActionMenu;
+import com.adavid.visualhasher.presentation.views.components.Box;
 import com.adavid.visualhasher.presentation.views.components.BoxesSpinner;
+import com.adavid.visualhasher.presentation.views.components.CancelItem;
 import com.adavid.visualhasher.presentation.views.components.DrawsSpinner;
+import com.adavid.visualhasher.presentation.views.components.FileMenu;
 import com.adavid.visualhasher.presentation.views.components.HashFunctionSelector;
+import com.adavid.visualhasher.presentation.views.components.QuitMenuItem;
+import com.adavid.visualhasher.presentation.views.components.ReRunItem;
+import com.adavid.visualhasher.presentation.views.components.RunItem;
+import com.adavid.visualhasher.presentation.views.components.futures.AboutMenuItem;
+import com.adavid.visualhasher.presentation.views.components.futures.HelpMenu;
+import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenu;
 import com.adavid.visualhasher.presentation.views.exceptions.IllegalSelectedHashFunctionException;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -67,6 +73,7 @@ public final class SwingView implements View {
     private static final String DEFAULT_TITLE = "VisualHasher";
 
     // Panels
+    private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new GridLayout(2, 1));
     private final JScrollPane boxesPanel = new JScrollPane();
 
@@ -83,17 +90,19 @@ public final class SwingView implements View {
 
     private AbstractHashFunctionWorker hashFunctionWorker;
 
+    /**
+     * Create the SwingView with the default name.
+     *
+     * @since 1.0.0
+     */
+    public SwingView() {
+        this(SwingView.DEFAULT_TITLE);
+    }
+
     public SwingView(final String title) {
         super();
 
-        var finalTitle = title;
-        if (null == title) {
-            finalTitle = SwingView.DEFAULT_TITLE;
-        }
-    }
-
-    public SwingView() {
-        super();
+        final var finalTitle = Objects.requireNonNull(title, "The title is null. Please give a title not null.");
 
         this.boxesNb.setEnabled(true);
         this.boxesNb.setVisible(true);
@@ -231,15 +240,47 @@ public final class SwingView implements View {
                 this.progressBar.setVisible(false);
             }
         });
+
+        this.frame = new JFrame(finalTitle);
+        this.frame.setMinimumSize(new Dimension(720, 480));
+
+        final var quit = new QuitMenuItem();
+        quit.addActionListener((final ActionEvent event) -> {
+            if ("quit".equals(event.getActionCommand())) {
+                this.frame.dispose();
+            }
+        });
+
+        final var fileMenu = new FileMenu();
+        fileMenu.add(quit);
+
+        final var runButton = new RunItem();
+        final var reRunButton = new ReRunItem();
+        final var cancelButton = new CancelItem();
+
+        final var actionMenu = new ActionMenu();
+        actionMenu.add(runButton);
+        actionMenu.add(reRunButton);
+        actionMenu.add(cancelButton);
+
+        final var menuBar = new JMenuBar();
+        menuBar.add(fileMenu);
+        menuBar.add(actionMenu);
+
+        this.frame.setJMenuBar(menuBar);
+        this.frame.setContentPane(this.getViewport());
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void runAction() {
         this.progressBar.setIndeterminate(true);
         this.progressBar.setValue(0);
 
-        final int boxesNumber = this.boxesNb.getValue();
+        final var boxesNumber = new NumberOfBoxes(this.boxesNb.getValue());
         final var drawsNumber = (int) this.drawsNb.getValue();
-        final var function = (String) Objects.requireNonNull(this.hashFunction.getSelectedItem());
+        final var function = (String) Objects.requireNonNull(this.hashFunction.getSelectedItem(),
+                                                             "Selected hash function name is null."
+                                                            );
 
         this.hashFunctionWorker = switch (function) {
             case HashFunctionSelector.CHAINING_FUNCTION -> new ChainingHashFunctionWorker(boxesNumber, drawsNumber);
@@ -266,7 +307,44 @@ public final class SwingView implements View {
                 if (this.hashFunctionWorker.isDone()) {
                     try {
                         final HashFunctionResult result = this.hashFunctionWorker.get();
-                        result.boxes().forEach(this.boxesPanel::add);
+                        // TODO Ajouter les boxes à l'écran
+
+                        //                        result.boxes().forEach(this.boxesPanel::add);
+
+                        System.out.println(result.information());
+                        class Output extends Thread {
+                            private final Vector<Box> boxes;
+
+                            public Output(final List<Box> boxes) {
+                                this.boxes = new Vector<>(boxes);
+
+                            }
+
+                            public void run() {
+                                this.boxes.parallelStream().forEach(System.out::println);
+                            }
+                        }
+                        //                        result.boxes().parallelStream().forEach(System.out::println);
+                        new Output(result.boxes()).run();
+
+                        final var box = result.boxes().get(0);
+                        this.boxesPanel.add(box);
+
+                        this.reRunButton.setEnabled(false);
+                        this.reRunButton.setVisible(false);
+                        this.reRunButton.setFocusable(false);
+
+                        this.cancelButton.setEnabled(false);
+                        this.cancelButton.setVisible(false);
+                        this.cancelButton.setFocusable(false);
+
+                        this.runButton.setEnabled(true);
+                        this.runButton.setVisible(true);
+                        this.runButton.setFocusable(true);
+
+                        this.progressBar.setValue(0);
+                        this.progressBar.setEnabled(false);
+                        this.progressBar.setVisible(false);
                     }
                     catch (final InterruptedException | ExecutionException e) {
                         throw new RuntimeException(e);
@@ -280,82 +358,46 @@ public final class SwingView implements View {
         this.cancelButton.setEnabled(true);
     }
 
-    @Override
-    public void execute() {
-        final var frame = new JFrame("SwingView");
-        frame.setMinimumSize(new Dimension(720, 480));
+    private Container getViewport() {
+        return this.mainPanel;
+    }
 
-        final var fileMenu = new JMenu("File");
-        fileMenu.getAccessibleContext().setAccessibleName("File");
-        fileMenu.getAccessibleContext().setAccessibleDescription(
-                "File menu permits to access to settings or exit the application.");
+    /**
+     * For the v1.1.0
+     *
+     * @param fileMenu JMenuBar. The file menu.
+     *
+     * @implNote For v1.1.0
+     * @since 1.1.0
+     */
+    private void addLanguageMenu(final JMenu fileMenu) {
+        final var notNullMenu = Objects.requireNonNull(fileMenu, "The file menu is null. Please give a menu not null.");
 
-        final var languages = new JMenu("Language");
-        final var languageGroup = new ButtonGroup();
+        final var languages = new LocaleMenu();
+        notNullMenu.add(languages);
 
-        final var english = new JRadioButtonMenuItem("English");
-        english.setSelected(true);
-        english.setActionCommand("english");
-        english.setEnabled(true);
-        english.setOpaque(true);
-        english.setName("english");
-        english.setVisible(true);
-        english.getAccessibleContext().setAccessibleName("English language");
-        english.getAccessibleContext().setAccessibleDescription("Change the locale to the English language.");
+        notNullMenu.addSeparator();
+    }
 
-        final var french = new JMenuItem("French");
-        french.setSelected(false);
-        french.setActionCommand("french");
-        french.setEnabled(true);
-        french.setOpaque(true);
-        french.setName("french");
-        french.setVisible(true);
-        french.getAccessibleContext().setAccessibleName("French language");
-        french.getAccessibleContext().setAccessibleDescription("Change the locale to the French language.");
-
-        languageGroup.add(english);
-        languageGroup.add(french);
-
-        languages.add(english);
-        languages.add(french);
-
-        languages.getAccessibleContext().setAccessibleName("Language");
-        languages.getAccessibleContext().setAccessibleDescription("Change the application language.");
-        languages.setActionCommand("language");
-        fileMenu.add(languages);
+    /**
+     * For the v1.1.0
+     *
+     * @param bar JMenuBar. The menu bar.
+     * @param frame JFrame. The frame where the about dialog was open.
+     *
+     * @implNote For v1.1.0
+     * @since 1.1.0
+     */
+    private void addHelpMenu(final JMenuBar bar, final JFrame frame) {
+        final var notNullMenu = Objects.requireNonNull(bar, "The menu bar is null. Please give a menu not null.");
+        final var notNullFrame = Objects.requireNonNull(frame, "The frame is null. Please give a frame not null.");
 
 
-        fileMenu.addSeparator();
-
-        final var quit = new JMenuItem("Quit");
-        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
-        quit.getAccessibleContext().setAccessibleName("Quit");
-        quit.getAccessibleContext().setAccessibleDescription("Quit the application.");
-        quit.setActionCommand("quit");
-        quit.addActionListener((final ActionEvent event) -> {
-            if ("quit".equals(event.getActionCommand())) {
-                frame.dispose();
-            }
-        });
-        fileMenu.add(quit);
-
-        final var helpMenu = new JMenu("?");
-        helpMenu.getAccessibleContext().setAccessibleName("Help");
-        helpMenu.getAccessibleContext().setAccessibleDescription(
-                "Help menu permits accessing to quick help and about information");
-
-        final var about = new JMenuItem("About");
-        about.getAccessibleContext().setAccessibleName("About");
-        about.getAccessibleContext().setAccessibleDescription("Show about information.");
-        about.setEnabled(true);
-        about.setOpaque(true);
-        about.setName("about");
-        about.setToolTipText("Show about information.");
-        about.setHideActionText(false);
-        about.setActionCommand("about");
+        final var helpMenu = new HelpMenu();
+        final var about = new AboutMenuItem();
         about.addActionListener((final ActionEvent event) -> {
             if ("about".equals(event.getActionCommand())) {
-                final var aboutDialog = new JDialog(frame, "About", Dialog.ModalityType.APPLICATION_MODAL);
+                final var aboutDialog = new JDialog(notNullFrame, "About", Dialog.ModalityType.APPLICATION_MODAL);
                 aboutDialog.setVisible(true);
                 aboutDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 aboutDialog.setAlwaysOnTop(true);
@@ -375,68 +417,14 @@ public final class SwingView implements View {
                 aboutDialog.add(license);
             }
         });
-
         helpMenu.add(about);
 
-        final var actionMenu = new JMenu("Action");
-        actionMenu.getAccessibleContext().setAccessibleName("Action");
-        actionMenu.getAccessibleContext().setAccessibleDescription(
-                "Action menu permits to run, cancel or re-run the computing of the hash function.");
-
-        final var runButton = new JMenuItem("Run");
-        runButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-        runButton.setActionCommand("run");
-        runButton.setEnabled(true);
-        runButton.setToolTipText("Run the selected hash function.");
-        runButton.setName("run");
-        runButton.setVisible(true);
-        runButton.setOpaque(true);
-        runButton.setHideActionText(false);
-        runButton.getAccessibleContext().setAccessibleName("Run");
-        runButton.getAccessibleContext().setAccessibleDescription("Run the selected hash function.");
-
-        final var reRunButton = new JMenuItem("Re-Run");
-        reRunButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
-        reRunButton.setActionCommand("re-run");
-        reRunButton.setEnabled(false);
-        reRunButton.setToolTipText("Cancel the computing hash function, and run the selected hash function.");
-        reRunButton.setName("re-run");
-        reRunButton.setVisible(true);
-        reRunButton.setOpaque(true);
-        reRunButton.setHideActionText(false);
-        reRunButton.getAccessibleContext().setAccessibleName("Re-Run");
-        reRunButton.getAccessibleContext().setAccessibleDescription(
-                "Cancel the computing hash function, and run the selected hash function.");
-
-        final var cancelButton = new JMenuItem("Cancel");
-        cancelButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
-        cancelButton.setActionCommand("cancel");
-        cancelButton.setEnabled(false);
-        cancelButton.setToolTipText("Cancel the computing hash function.");
-        cancelButton.setName("cancel");
-        cancelButton.setVisible(true);
-        cancelButton.setOpaque(true);
-        cancelButton.setHideActionText(false);
-        cancelButton.getAccessibleContext().setAccessibleName("Cancel");
-        cancelButton.getAccessibleContext().setAccessibleDescription("Cancel the computing hash function.");
-
-        actionMenu.add(runButton);
-        actionMenu.add(reRunButton);
-        actionMenu.add(cancelButton);
-
-        final var menuBar = new JMenuBar();
-        menuBar.add(fileMenu);
-        menuBar.add(actionMenu);
-        menuBar.add(helpMenu);
-
-        frame.setJMenuBar(menuBar);
-        frame.setContentPane(this.getViewport());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        notNullMenu.add(helpMenu);
     }
 
-    private Container getViewport() {
-        return this.mainPanel;
+    @Override
+    public void execute() {
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 }

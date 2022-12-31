@@ -15,10 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.futures;
-
-import com.adavid.visualhasher.presentation.views.exceptions.EmptyLocalesListException;
-import com.adavid.visualhasher.presentation.views.exceptions.IllegalLocalesListException;
+package com.adavid.visualhasher.presentation.views.components.futures.locales;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;

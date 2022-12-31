@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
+package com.adavid.visualhasher.presentation.views.components.futures;
 
 public class Ball {
 }

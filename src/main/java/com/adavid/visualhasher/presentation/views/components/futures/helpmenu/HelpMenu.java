@@ -15,34 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.futures;
+package com.adavid.visualhasher.presentation.views.components.futures.helpmenu;
 
-import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 /**
- * Create an about menu item.
+ * The help menu.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @implNote Not implemented, not finish (for v1.1.0).
  * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.1.0
  */
-public final class AboutMenuItem extends JMenuItem {
+public final class HelpMenu extends JMenu {
     /**
-     * Create the default AboutMenuItem.
+     * Create the default help menu.
      *
      * @since 1.0.0
      */
-    public AboutMenuItem() {
-        super("About");
-        super.getAccessibleContext().setAccessibleName("About");
-        super.getAccessibleContext().setAccessibleDescription("Show about information.");
-        super.setEnabled(true);
-        super.setOpaque(true);
-        super.setName("about");
-        super.setToolTipText("Show about information.");
-        super.setHideActionText(false);
-        super.setActionCommand("about");
+    public HelpMenu() {
+        super("?");
+        super.getAccessibleContext().setAccessibleName("Help");
+        super.getAccessibleContext().setAccessibleDescription(
+                "Help menu permits accessing to quick help and about information");
     }
 }

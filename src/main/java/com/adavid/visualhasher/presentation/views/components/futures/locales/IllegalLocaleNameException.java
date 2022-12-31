@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.exceptions;
-
-import com.adavid.visualhasher.presentation.views.components.futures.LocaleMenuItem;
+package com.adavid.visualhasher.presentation.views.components.futures.locales;
 
 import java.io.Serial;
 

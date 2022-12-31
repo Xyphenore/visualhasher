@@ -15,11 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.futures;
+package com.adavid.visualhasher.presentation.views.components.futures.locales;
 
 import com.adavid.visualhasher.domain.exceptions.BlankStringException;
 import com.adavid.visualhasher.domain.exceptions.EmptyStringException;
-import com.adavid.visualhasher.presentation.views.exceptions.IllegalLocaleNameException;
 
 import javax.swing.JRadioButtonMenuItem;
 import java.util.Objects;

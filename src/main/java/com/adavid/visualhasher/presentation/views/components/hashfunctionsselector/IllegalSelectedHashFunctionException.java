@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.exceptions;
+package com.adavid.visualhasher.presentation.views.components.hashfunctionsselector;
 
 import java.io.Serial;
 
@@ -24,7 +24,7 @@ import java.io.Serial;
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.components.HashFunctionSelector
+ * @see HashFunctionSelector
  * @since 1.0.0
  */
 public final class IllegalSelectedHashFunctionException extends IllegalArgumentException {

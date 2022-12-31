@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components;
+package com.adavid.visualhasher.presentation.views.components.hashfunctionsselector;
 
 import com.adavid.visualhasher.domain.exceptions.BlankStringException;
 import com.adavid.visualhasher.domain.exceptions.EmptyFunctionNamesListException;

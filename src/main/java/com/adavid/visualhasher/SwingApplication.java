@@ -37,7 +37,8 @@ public final class SwingApplication implements Application {
      * @since 1.0.0
      */
     public SwingApplication() {
-        this(null);
+        super();
+        this.view = new SwingView();
     }
 
     /**

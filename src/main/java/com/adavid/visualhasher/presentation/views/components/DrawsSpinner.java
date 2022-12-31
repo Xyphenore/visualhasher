@@ -21,6 +21,7 @@ import com.adavid.visualhasher.domain.utility.DrawsRange;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import java.util.Objects;
 
 public final class DrawsSpinner extends JSpinner {
     public static final Integer MIN_DRAWS = BoxesSpinner.MAX_BOXES / 2;
@@ -45,8 +46,8 @@ public final class DrawsSpinner extends JSpinner {
         final var minValue = interval.min();
         final var maxValue = interval.max();
 
-        if (minValue != this.min || maxValue != this.max) {
-            super.setModel(new SpinnerNumberModel(minValue, minValue, maxValue, this.step));
+        if (!Objects.equals(minValue, this.min) || !Objects.equals(maxValue, this.max)) {
+            super.setModel(new SpinnerNumberModel(minValue, minValue, maxValue, Integer.valueOf(this.step)));
             this.min = minValue;
             this.max = maxValue;
             this.setValue(maxValue);

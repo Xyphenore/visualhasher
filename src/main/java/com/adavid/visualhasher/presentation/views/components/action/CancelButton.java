@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,34 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.actionmenu;
+package com.adavid.visualhasher.presentation.views.components.action;
 
-import javax.swing.JMenu;
+import javax.swing.JButton;
 import java.io.Serial;
 
 /**
- * The action menu.
+ * CancelButton.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see RunItem
- * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class ActionMenu extends JMenu {
+public final class CancelButton extends JButton {
     @Serial
-    private static final long serialVersionUID = 6693041031716416612L;
+    private static final long serialVersionUID = -1781554196091775746L;
 
     /**
-     * Create the default action menu.
+     * Create the default CancelButton.
      *
      * @since 1.0.0
      */
-    public ActionMenu() {
-        super("Action");
-        super.getAccessibleContext().setAccessibleName("Action");
-        super.getAccessibleContext().setAccessibleDescription(
-                "Action menu permits running, cancel or re-run the computing of the hash function.");
-
+    public CancelButton() {
+        super("Cancel");
+        super.setEnabled(false);
+        super.setVisible(false);
+        super.setFocusable(false);
+        super.setName("cancelButton");
+        super.setOpaque(true);
+        super.setToolTipText("Stop the running operation.");
+        super.setHideActionText(false);
+        super.setActionCommand("cancel");
     }
 }

@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,39 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.actionmenu;
+package com.adavid.visualhasher.presentation.views.components.action;
 
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import javax.swing.JButton;
+import java.io.Serial;
 
 /**
- * The run item.
+ * RunButton to run something.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see ActionMenu
- * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class RunItem extends JMenuItem {
+public final class RunButton extends JButton {
+    @Serial
+    private static final long serialVersionUID = -6423936197534019374L;
+
     /**
-     * Create the default run item.
+     * Create the default run button.
      *
      * @since 1.0.0
      */
-    public RunItem() {
+    public RunButton() {
         super("Run");
-        super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-        super.setActionCommand("run");
         super.setEnabled(true);
-        super.setToolTipText("Run the selected hash function.");
-        super.setName("run");
         super.setVisible(true);
+        super.setFocusable(true);
+        super.setName("runButton");
         super.setOpaque(true);
+        super.setToolTipText("Run the selected hash function with provided number of boxes and number of draws.");
         super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Run");
-        super.getAccessibleContext().setAccessibleDescription("Run the selected hash function.");
+        super.setActionCommand("run");
     }
 }

@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,6 +124,13 @@ public final class HashFunctionSelector extends JComboBox<String> {
                                                 error
             );
         }
+
+        super.setEditable(false);
+        super.setEnabled(true);
+        super.setName("hashFunctions");
+        super.setFocusable(true);
+        super.setVisible(true);
+        super.setOpaque(true);
     }
 
     private static Collection<String> generateDefaultHashFunctions() {

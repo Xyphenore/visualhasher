@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,13 @@
 
 package com.adavid.visualhasher.presentation.views;
 
-import com.adavid.visualhasher.domain.AbstractHashFunctionWorker;
-import com.adavid.visualhasher.domain.ChainingHashFunctionWorker;
-import com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker;
-import com.adavid.visualhasher.domain.HashFunctionResult;
-import com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker;
-import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
+import com.adavid.visualhasher.domain.*;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import com.adavid.visualhasher.infrastructure.Configuration;
-import com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu;
-import com.adavid.visualhasher.presentation.views.components.actionmenu.CancelItem;
-import com.adavid.visualhasher.presentation.views.components.actionmenu.ReRunItem;
-import com.adavid.visualhasher.presentation.views.components.actionmenu.RunItem;
-import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
+import com.adavid.visualhasher.presentation.views.components.action.*;
+import com.adavid.visualhasher.presentation.views.components.boxes.Box;
+import com.adavid.visualhasher.presentation.views.components.boxes.BoxesPanel;
 import com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu;
 import com.adavid.visualhasher.presentation.views.components.filemenu.QuitMenuItem;
 import com.adavid.visualhasher.presentation.views.components.futures.helpmenu.AboutMenuItem;
@@ -41,17 +34,7 @@ import com.adavid.visualhasher.presentation.views.components.hashfunctionsselect
 import com.adavid.visualhasher.presentation.views.components.spinners.BoxesSpinner;
 import com.adavid.visualhasher.presentation.views.components.spinners.DrawsSpinner;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,10 +56,12 @@ import java.util.concurrent.ExecutionException;
 public final class SwingView implements View {
     private static final String DEFAULT_TITLE = "VisualHasher";
 
+    private static final Dimension MINIMUM_SIZE = new Dimension(720, 480);
+
     // Panels
     private final JFrame frame;
-    private final JPanel mainPanel = new JPanel(new GridLayout(2, 1));
-    private final JScrollPane boxesPanel = new JScrollPane();
+    private final JPanel mainPanel = new JPanel(new GridLayout(14, 1));
+    private final JScrollPane boxesPanel = new BoxesPanel();
 
     // Selectors
     private final BoxesSpinner boxesNb = new BoxesSpinner();
@@ -84,10 +69,12 @@ public final class SwingView implements View {
     private final HashFunctionSelector hashFunction = new HashFunctionSelector();
 
     // Buttons and progress bar
-    private final JButton runButton = new JButton("Run");
-    private final JButton reRunButton = new JButton("Re-Run");
-    private final JButton cancelButton = new JButton("Cancel");
-    private final JProgressBar progressBar = new JProgressBar(0, 100);
+    private final JButton runButton = new RunButton();
+    private final JButton reRunButton = new ReRunButton();
+    private final JButton cancelButton = new CancelButton();
+
+    private final ActionMenu actionMenu;
+    private final JPanel progressBar = new ProgressBar();
 
     private AbstractHashFunctionWorker hashFunctionWorker;
 
@@ -103,80 +90,16 @@ public final class SwingView implements View {
     public SwingView(final String title) {
         super();
 
-        final var finalTitle = Objects.requireNonNull(title, "The title is null. Please give a title not null.");
+        this.frame = new JFrame(Objects.requireNonNull(title, "The title is null. Please give a title not null."));
+        this.frame.setMinimumSize(SwingView.MINIMUM_SIZE);
 
-        this.boxesNb.setEnabled(true);
-        this.boxesNb.setVisible(true);
-        this.boxesNb.setOpaque(true);
-        this.boxesNb.setFocusable(true);
-        this.boxesNb.setName("boxesNb");
-
-        this.drawsNb.setEnabled(true);
         this.drawsNb.setInterval(new DrawsRange(new NumberOfBoxes(this.boxesNb.getValue())));
-        this.drawsNb.setVisible(true);
-        this.drawsNb.setOpaque(true);
-        this.drawsNb.setFocusable(true);
-        this.drawsNb.setName("drawNb");
 
-        this.hashFunction.setEditable(false);
-        this.hashFunction.setEnabled(true);
-        this.hashFunction.setName("hashFunctions");
-        this.hashFunction.setFocusable(true);
-        this.hashFunction.setVisible(true);
-        this.hashFunction.setOpaque(true);
+        final var header = new JPanel(new GridLayout(2, 1));
+        header.add(new ActionBar());
+        header.add(this.progressBar);
+        this.mainPanel.add(header);
 
-        this.runButton.setEnabled(true);
-        this.runButton.setVisible(true);
-        this.runButton.setFocusable(true);
-        this.runButton.setName("runButton");
-        this.runButton.setOpaque(true);
-        this.runButton.setToolTipText(
-                "Run the selected hash function with provided number of boxes and number of draws.");
-        this.runButton.setHideActionText(false);
-        this.runButton.setActionCommand("run");
-
-        this.reRunButton.setEnabled(false);
-        this.reRunButton.setVisible(false);
-        this.reRunButton.setFocusable(false);
-        this.reRunButton.setName("reRunButton");
-        this.reRunButton.setOpaque(true);
-        this.reRunButton.setToolTipText(
-                "Stop the running operation and run the selected hash function with provided number of boxes and number of draws.");
-        this.reRunButton.setHideActionText(false);
-        this.reRunButton.setActionCommand("re-run");
-
-        this.cancelButton.setEnabled(false);
-        this.cancelButton.setVisible(false);
-        this.cancelButton.setFocusable(false);
-        this.cancelButton.setName("cancelButton");
-        this.cancelButton.setOpaque(true);
-        this.cancelButton.setToolTipText("Stop the running operation.");
-        this.cancelButton.setHideActionText(false);
-        this.cancelButton.setActionCommand("cancel");
-
-        this.progressBar.setName("progressBar");
-        this.progressBar.setEnabled(false);
-        this.progressBar.setVisible(false);
-        this.progressBar.setFocusable(false);
-        this.progressBar.setOpaque(true);
-        this.progressBar.setStringPainted(true);
-
-        final var buttonBar = new JPanel(new FlowLayout());
-        buttonBar.add(this.boxesNb);
-        buttonBar.add(this.drawsNb);
-        buttonBar.add(this.hashFunction);
-        buttonBar.add(this.runButton);
-        buttonBar.add(this.reRunButton);
-        buttonBar.add(this.cancelButton);
-        buttonBar.add(this.progressBar);
-
-        this.boxesPanel.setEnabled(true);
-        this.boxesPanel.setVisible(true);
-        this.boxesPanel.setName("boxesPanel");
-        this.boxesPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        this.boxesPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        this.mainPanel.add(buttonBar);
         this.mainPanel.add(this.boxesPanel);
 
         this.boxesNb.addChangeListener((final ChangeEvent ignored) -> {
@@ -243,31 +166,33 @@ public final class SwingView implements View {
             }
         });
 
-        this.frame = new JFrame(finalTitle);
-        this.frame.setMinimumSize(new Dimension(720, 480));
-
-        final var quit = new QuitMenuItem();
-        quit.addActionListener((final ActionEvent event) -> {
+        final var fileMenu = new FileMenu(new QuitMenuItem());
+        fileMenu.getQuit().addActionListener((final ActionEvent event) -> {
             if ("quit".equals(event.getActionCommand())) {
                 this.frame.dispose();
             }
         });
 
-        final var fileMenu = new FileMenu();
-        fileMenu.add(quit);
-
-        final var runButton = new RunItem();
-        final var reRunButton = new ReRunItem();
-        final var cancelButton = new CancelItem();
-
-        final var actionMenu = new ActionMenu();
-        actionMenu.add(runButton);
-        actionMenu.add(reRunButton);
-        actionMenu.add(cancelButton);
+        this.actionMenu = new ActionMenu(new RunItem(), new ReRunItem(), new CancelItem());
+        this.actionMenu.getRunItem().addActionListener((final ActionEvent event) -> {
+            if ("run".equals(event.getActionCommand())) {
+                this.runCallback();
+            }
+        });
+        this.actionMenu.getReRunItem().addActionListener((final ActionEvent event) -> {
+            if ("re-run".equals(event.getActionCommand())) {
+                this.reRunCallback();
+            }
+        });
+        this.actionMenu.getCancelItem().addActionListener((final ActionEvent event) -> {
+            if ("cancel".equals(event.getActionCommand())) {
+                this.cancelCallback();
+            }
+        });
 
         final var menuBar = new JMenuBar();
         menuBar.add(fileMenu);
-        menuBar.add(actionMenu);
+        menuBar.add(this.actionMenu);
 
         this.frame.setJMenuBar(menuBar);
         this.frame.setContentPane(this.getViewport());
@@ -315,9 +240,9 @@ public final class SwingView implements View {
 
                         System.out.println(result.information());
                         final class Output extends Thread {
-                            private final Collection<NumberBox> boxes;
+                            private final Collection<? extends Box> boxes;
 
-                            private Output(final List<NumberBox> boxes) {
+                            private Output(final List<? extends Box> boxes) {
                                 super();
                                 this.boxes = new Vector<>(boxes);
 
@@ -331,7 +256,7 @@ public final class SwingView implements View {
                         new Output(result.boxes()).start();
 
                         final var box = result.boxes().get(0);
-                        this.boxesPanel.add(box);
+                        //                        this.boxesPanel.add(box);
 
                         this.reRunButton.setEnabled(false);
                         this.reRunButton.setVisible(false);
@@ -359,6 +284,43 @@ public final class SwingView implements View {
 
         this.reRunButton.setEnabled(true);
         this.cancelButton.setEnabled(true);
+    }
+
+    private void runCallback() {
+        this.runButton.setEnabled(false);
+        this.runButton.setVisible(false);
+        this.runButton.setFocusable(false);
+
+        this.reRunButton.setVisible(true);
+        this.reRunButton.setFocusable(true);
+
+        this.cancelButton.setVisible(true);
+        this.cancelButton.setFocusable(true);
+
+        final var runItem = this.actionMenu.getRunItem();
+        runItem.setEnabled(false);
+        runItem.setFocusable(false);
+
+        final var reRunItem = this.actionMenu.getReRunItem();
+        reRunItem.setVisible(true);
+        reRunItem.setFocusable(true);
+
+        final var cancelItem = this.actionMenu.getCancelItem();
+        cancelItem.setVisible(true);
+        cancelItem.setFocusable(true);
+
+        this.progressBar.setEnabled(true);
+        this.progressBar.setVisible(true);
+
+        this.runAction();
+    }
+
+    private void reRunCallback() {
+
+    }
+
+    private void cancelCallback() {
+
     }
 
     private Container getViewport() {

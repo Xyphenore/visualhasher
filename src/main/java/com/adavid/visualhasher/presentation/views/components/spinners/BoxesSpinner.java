@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,11 @@ public final class BoxesSpinner extends CommonBaseIntegerSpinner {
      */
     public BoxesSpinner(final BoxesRange interval, final int step) {
         super(interval, step);
+        super.setEnabled(true);
+        super.setVisible(true);
+        super.setOpaque(true);
+        super.setFocusable(true);
+        super.setName("boxesNb");
     }
 
     /**

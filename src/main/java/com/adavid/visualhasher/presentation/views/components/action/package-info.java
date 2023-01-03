@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,14 @@
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu}<br>
- * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.RunItem}<br>
- * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.ReRunItem}<br>
- * - {@link com.adavid.visualhasher.presentation.views.components.actionmenu.CancelItem}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.ActionMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.RunItem}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.ReRunItem}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.CancelItem}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation.views.components.actionmenu.ActionMenu
+ * @see com.adavid.visualhasher.presentation.views.components.action.ActionMenu
  * @since 1.0.0
  */
-package com.adavid.visualhasher.presentation.views.components.actionmenu;
+package com.adavid.visualhasher.presentation.views.components.action;

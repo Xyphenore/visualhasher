@@ -17,22 +17,35 @@
 
 package com.adavid.visualhasher.presentation.views.components.filemenu;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 /**
- * Interface provided a method to get the quit button of a file menu.
+ * Create a file menu.
  *
  * @author Axel DAVID
  * @version 1.0.0
+ * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public interface FileMenu {
+public final class SwingFileMenu extends JMenu implements FileMenu {
+    private final JMenuItem quit = new QuitMenuItem();
+
     /**
-     * Get the quit button.
-     *
-     * @return JMenuItem
+     * Create a SwingFileMenu with the QuitMenuItem button.
      *
      * @since 1.0.0
      */
-    JMenuItem getQuit();
+    public SwingFileMenu() {
+        super("File");
+        super.getAccessibleContext().setAccessibleName("File");
+        super.getAccessibleContext().setAccessibleDescription(
+                "File menu permits accessing to settings or exit the application.");
+        super.add(this.quit);
+    }
+
+    @Override
+    public JMenuItem getQuit() {
+        return this.quit;
+    }
 }

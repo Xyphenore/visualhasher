@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
  */
 
 /**
- * All components for FileMenu.
+ * All components for SwingFileMenu.
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.filemenu.SwingFileMenu}<br>
  * - {@link com.adavid.visualhasher.presentation.views.components.filemenu.QuitMenuItem}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu
+ * @see com.adavid.visualhasher.presentation.views.components.filemenu.SwingFileMenu
  * @since 1.0.0
  */
 package com.adavid.visualhasher.presentation.views.components.filemenu;

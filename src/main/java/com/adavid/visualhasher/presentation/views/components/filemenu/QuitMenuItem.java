@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import java.io.Serial;
  * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class QuitMenuItem extends JMenuItem {
+final class QuitMenuItem extends JMenuItem {
     @Serial
     private static final long serialVersionUID = -4118181310071668747L;
 
@@ -40,7 +40,7 @@ public final class QuitMenuItem extends JMenuItem {
      *
      * @since 1.0.0
      */
-    public QuitMenuItem() {
+    QuitMenuItem() {
         super("Quit");
         super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         super.getAccessibleContext().setAccessibleName("Quit");

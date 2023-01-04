@@ -23,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DropMode;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import java.awt.Dimension;
 import java.io.Serial;
 import java.util.Objects;
 
@@ -90,11 +91,12 @@ public class CommonBaseBox extends JPanel implements Box {
         super.add(this.idField);
         super.add(this.ballsNumber);
 
-        this.setEnabled(true);
-        this.setOpaque(true);
-        this.setAutoscrolls(true);
-        this.setName("box");
-        this.setVisible(true);
+        super.setEnabled(true);
+        super.setOpaque(true);
+        super.setName("box");
+        super.setVisible(true);
+        final var dim = new Dimension(50, 50);
+        super.setBounds(0, 0, 50, 50);
     }
 
     protected CommonBaseBox(final int id, final boolean filled, final ColoredBox.Color color) {

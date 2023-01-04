@@ -17,8 +17,7 @@
 
 package com.adavid.visualhasher.presentation.views.components.boxes;
 
-import com.adavid.visualhasher.domain.Box;
-
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -31,7 +30,8 @@ import javax.swing.ScrollPaneConstants;
  * @since 1.0.0
  */
 public final class BoxesPanel extends JScrollPane {
-    private final JList<Box> boxes = new JList<>();
+    private final DefaultListModel<CommonBaseBox> model = new DefaultListModel<>();
+    private final JList<CommonBaseBox> boxes = new JList<>(this.model);
 
     /**
      * Create the default boxes panel.
@@ -45,19 +45,25 @@ public final class BoxesPanel extends JScrollPane {
         super.setName("boxesPanel");
         super.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         super.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        this.boxes.setVisible(true);
+        this.boxes.setEnabled(true);
+        this.boxes.setOpaque(true);
+        super.setViewportView(this.boxes);
         super.add(this.boxes);
+        this.boxes.setVisibleRowCount(0);
     }
 
-    public JList<Box> getBoxesList() {
+    public JList<CommonBaseBox> getBoxesList() {
         return this.boxes;
     }
 
-    public void addBox(final Box box) {
+    public void addBox(final CommonBaseBox box) {
         final var goodBox = (CommonBaseBox) box;
-        this.boxes.add(goodBox);
+        this.model.addElement(goodBox);
     }
 
     public void clear() {
-        this.boxes.clearSelection();
+        this.model.clear();
     }
 }

@@ -337,13 +337,10 @@ public final class SwingView implements View {
 
                 @Override
                 public void run() {
-                    this.boxes.parallelStream().forEach(System.out::println);
+                    this.boxes.forEach(System.out::println);
                 }
             }
             new Output(result.boxes()).start();
-
-            final var box = result.boxes().get(0);
-            //                        this.boxesPanel.add(box);
 
             this.disableReRunAction();
             this.disableCancelAction();

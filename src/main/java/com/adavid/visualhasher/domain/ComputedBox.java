@@ -108,4 +108,9 @@ public final class ComputedBox implements Box {
     public int getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return "ComputedBox{" + "colored=" + this.colored + ", id=" + this.id + ", original=" + this.original + ", balls=" + this.balls + '}';
+    }
 }

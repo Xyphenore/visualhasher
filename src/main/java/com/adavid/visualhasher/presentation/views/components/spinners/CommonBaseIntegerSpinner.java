@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,9 @@ import java.io.Serial;
 import java.util.Objects;
 
 /**
- * the common base of Spinners.
+ * The common base of Spinners.
+ *
+ * @param <T> Class extended CommonIntegerRange
  *
  * @author Axel DAVID
  * @version 1.0.0
@@ -33,11 +35,11 @@ import java.util.Objects;
  * @see BoxesSpinner
  * @since 1.0.0
  */
-public class CommonBaseIntegerSpinner extends JSpinner implements IntegerSpinner {
+public class CommonBaseIntegerSpinner<T extends CommonIntegerRange> extends JSpinner implements IntegerSpinner<T> {
     @Serial
     private static final long serialVersionUID = 5331067496725947493L;
     private int step;
-    private CommonIntegerRange interval;
+    private T interval;
 
     private CommonBaseIntegerSpinner() {
         super();
@@ -45,7 +47,7 @@ public class CommonBaseIntegerSpinner extends JSpinner implements IntegerSpinner
                 "Cannot create a CommonBaseIntegerSpinner without arguments. Please call the protected constructor with the interval and the step.");
     }
 
-    CommonBaseIntegerSpinner(final CommonIntegerRange interval, final int step) {
+    CommonBaseIntegerSpinner(final T interval, final int step) {
         super(new SpinnerNumberModel(interval.min(), interval.min(), interval.max(), Integer.valueOf(step)));
         this.interval = interval;
         this.step = step;
@@ -64,34 +66,38 @@ public class CommonBaseIntegerSpinner extends JSpinner implements IntegerSpinner
         return model.getNumber().intValue();
     }
 
+    @Override
+    public final void setValue(final Integer value) {
+        super.setValue(value);
+    }
+
     /**
      * Get the interval of the spinner.
      *
-     * @return Returns CommonIntegerRange.
+     * @return Returns T.
      *
      * @since 1.0.0
      */
-    public CommonIntegerRange getInterval() {
+    public final T getInterval() {
         return this.interval;
     }
 
     /**
      * Change the interval of the spinner.
      *
-     * @param interval CommonIntegerRange. The newer interval.
+     * @param interval T. The newer interval.
      *
      * @see CommonIntegerRange
      * @since 1.0.0
      */
-    public final void setInterval(final CommonIntegerRange interval) {
+    public final void setInterval(final T interval) {
         if (!Objects.equals(this.interval, interval)) {
-            final var minValue = interval.min();
-            final var maxValue = interval.max();
-
-            super.setModel(new SpinnerNumberModel(minValue, minValue, maxValue, Integer.valueOf(this.step)));
+            final var model = (SpinnerNumberModel) super.getModel();
+            model.setMinimum(interval.min());
+            model.setMaximum(interval.max());
 
             this.interval = interval;
-            this.setValue(maxValue);
+            this.setValue(interval.max());
         }
     }
 
@@ -115,11 +121,8 @@ public class CommonBaseIntegerSpinner extends JSpinner implements IntegerSpinner
      */
     public final void setStep(final int step) {
         if (step != this.step) {
-            super.setModel(new SpinnerNumberModel(this.interval.min(),
-                                                  this.interval.min(),
-                                                  this.interval.max(),
-                                                  Integer.valueOf(step)
-            ));
+            final SpinnerNumberModel model = (SpinnerNumberModel) super.getModel();
+            model.setStepSize(step);
             this.step = step;
         }
     }

@@ -31,7 +31,7 @@ import java.io.Serial;
  * @see CommonBaseIntegerSpinner
  * @since 1.0.0
  */
-public final class DrawsSpinner extends CommonBaseIntegerSpinner {
+public final class DrawsSpinner extends CommonBaseIntegerSpinner<DrawsRange> {
     private static final int MAX_DRAWS = BoxesSpinner.MAX_BOXES;
     private static final int STEP_DRAWS = 1;
     @Serial
@@ -55,36 +55,12 @@ public final class DrawsSpinner extends CommonBaseIntegerSpinner {
      * @see DrawsRange
      * @since 1.0.0
      */
-    public DrawsSpinner(final DrawsRange interval, final int step) {
+    private DrawsSpinner(final DrawsRange interval, final int step) {
         super(interval, step);
         super.setEnabled(true);
         super.setVisible(true);
         super.setOpaque(true);
         super.setFocusable(true);
         super.setName("drawNb");
-    }
-
-    /**
-     * Get the interval of the spinner.
-     *
-     * @return Returns DrawsRange.
-     *
-     * @since 1.0.0
-     */
-    @Override
-    public DrawsRange getInterval() {
-        return (DrawsRange) super.getInterval();
-    }
-
-    /**
-     * Change the interval of the spinner.
-     *
-     * @param interval DrawsRange. The newer interval.
-     *
-     * @see DrawsRange
-     * @since 1.0.0
-     */
-    public void setInterval(final DrawsRange interval) {
-        super.setInterval(interval);
     }
 }

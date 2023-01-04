@@ -30,7 +30,7 @@ import java.io.Serial;
  * @see BoxesRange
  * @since 1.0.0
  */
-public final class BoxesSpinner extends CommonBaseIntegerSpinner {
+public final class BoxesSpinner extends CommonBaseIntegerSpinner<BoxesRange> {
     static final int MAX_BOXES = 100_000;
     private static final int STEP_BOXES = 1;
     @Serial
@@ -51,36 +51,12 @@ public final class BoxesSpinner extends CommonBaseIntegerSpinner {
      * @param interval BoxesRange. The interval of available values.
      * @param step Int.
      */
-    public BoxesSpinner(final BoxesRange interval, final int step) {
+    private BoxesSpinner(final BoxesRange interval, final int step) {
         super(interval, step);
         super.setEnabled(true);
         super.setVisible(true);
         super.setOpaque(true);
         super.setFocusable(true);
         super.setName("boxesNb");
-    }
-
-    /**
-     * Get the interval of the spinner.
-     *
-     * @return Returns BoxesRange.
-     *
-     * @since 1.0.0
-     */
-    @Override
-    public BoxesRange getInterval() {
-        return (BoxesRange) super.getInterval();
-    }
-
-    /**
-     * Change the interval of the spinner.
-     *
-     * @param interval BoxesRange. The newer interval.
-     *
-     * @see BoxesRange
-     * @since 1.0.0
-     */
-    public void setInterval(final BoxesRange interval) {
-        super.setInterval(interval);
     }
 }

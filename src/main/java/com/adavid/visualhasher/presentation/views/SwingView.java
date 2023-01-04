@@ -24,7 +24,6 @@ import com.adavid.visualhasher.domain.HashFunctionResult;
 import com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
-import com.adavid.visualhasher.presentation.views.components.action.ProgressBar;
 import com.adavid.visualhasher.presentation.views.components.action.bar.SwingActionBar;
 import com.adavid.visualhasher.presentation.views.components.action.menu.SwingActionMenu;
 import com.adavid.visualhasher.presentation.views.components.boxes.Box;
@@ -33,12 +32,17 @@ import com.adavid.visualhasher.presentation.views.components.filemenu.SwingFileM
 import com.adavid.visualhasher.presentation.views.components.selectors.HashFunctionSelector;
 import com.adavid.visualhasher.presentation.views.components.selectors.IllegalSelectedHashFunctionException;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.Collection;
@@ -57,7 +61,8 @@ import java.util.concurrent.ExecutionException;
  */
 public final class SwingView implements View {
     private static final String DEFAULT_TITLE = "VisualHasher";
-    private static final Dimension MINIMUM_SIZE = new Dimension(860, 480);
+    private static final Dimension MINIMUM_SIZE = new Dimension(900, 480);
+    private static final Color SEPARATOR_COLOR = new Color(15, 23, 42);
     private static final String RUN_ACTION = "run";
     private static final String RE_RUN_ACTION = "re-run";
     private static final String CANCEL_ACTION = "cancel";
@@ -66,7 +71,7 @@ public final class SwingView implements View {
 
     private final SwingActionMenu actionMenu = new SwingActionMenu();
     private final SwingActionBar actionBar = new SwingActionBar();
-    private final JPanel progressBar = new ProgressBar();
+    private final JProgressBar progressBar = new JProgressBar(0, 100);
 
     private AbstractHashFunctionWorker hashFunctionWorker;
 
@@ -91,20 +96,45 @@ public final class SwingView implements View {
 
         this.frame = new JFrame(Objects.requireNonNull(title, "The title is null. Please give a title not null."));
         this.frame.setMinimumSize(SwingView.MINIMUM_SIZE);
+        this.frame.setLocationRelativeTo(null);
+
 
         this.actionBar.getDrawsSelector().setInterval(new DrawsRange(this.actionBar.getNumberOfBoxes()));
 
         this.initializeActionItemListeners();
 
-        final var header = new JPanel(new GridLayout(2, 1));
+        final var header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.PAGE_AXIS));
+        header.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+
+        this.actionBar.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SwingView.SEPARATOR_COLOR));
+
         header.add(this.actionBar);
         header.add(this.progressBar);
-        final var mainPanel = new JPanel(new GridLayout(12, 1));
+
+        this.progressBar.setEnabled(false);
+        this.progressBar.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, SwingView.SEPARATOR_COLOR));
+        this.progressBar.setStringPainted(true);
+        this.progressBar.setVisible(false);
+
+        final var mainLayout = new GridBagLayout();
+        final var mainPanel = new JPanel(mainLayout);
+        final var headerConstraints = new GridBagConstraints();
+        headerConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        headerConstraints.gridheight = 1;
+        headerConstraints.fill = GridBagConstraints.HORIZONTAL;
+        mainLayout.addLayoutComponent(header, headerConstraints);
         mainPanel.add(header);
 
         // TODO Add the text area
 
         final var boxesPanel = new BoxesPanel();
+        final var mainConstraints = new GridBagConstraints();
+        mainConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        mainConstraints.gridheight = 2;
+        mainConstraints.weighty = 1;
+        mainConstraints.fill = GridBagConstraints.BOTH;
+        mainLayout.addLayoutComponent(boxesPanel, mainConstraints);
         mainPanel.add(boxesPanel);
 
         final var menuBar = this.createMenuBar();
@@ -185,8 +215,8 @@ public final class SwingView implements View {
         this.actionMenu.getReRunItem().setEnabled(false);
         this.actionMenu.getCancelItem().setEnabled(false);
 
-        this.progressBar.setEnabled(true);
         this.progressBar.setVisible(true);
+        this.progressBar.setEnabled(true);
 
         this.runAction();
     }
@@ -214,25 +244,47 @@ public final class SwingView implements View {
     }
 
     /**
-     * Method executed when the event "cancel" is received.
+     * All actions need to run the selected hash function.
      *
-     * @see com.adavid.visualhasher.presentation.views.components.action.menu.CancelItem
-     * @see com.adavid.visualhasher.presentation.views.components.action.bar.CancelButton
      * @since 1.0.0
      */
-    private void cancelCallback() {
-        if (null != this.hashFunctionWorker) {
-            this.hashFunctionWorker.cancel(true);
-            this.hashFunctionWorker = null;
-        }
+    private void runAction() {
+        this.progressBar.setIndeterminate(true);
+        this.progressBar.setValue(0);
 
-        this.disableReRunAction();
-        this.disableCancelAction();
-        this.enableRunAction();
+        final var boxesNumber = this.actionBar.getNumberOfBoxes();
+        final int drawsNumber = this.actionBar.getNumberOfDraws();
+        final var function = Objects.requireNonNull(this.actionBar.getSelectedHashFunction(),
+                                                    "The selected hash function name is null."
+                                                   );
 
-        //                this.progressBar.setValue(0);
-        this.progressBar.setEnabled(false);
-        this.progressBar.setVisible(false);
+        this.hashFunctionWorker = switch (function) {
+            case HashFunctionSelector.CHAINING_FUNCTION -> new ChainingHashFunctionWorker(boxesNumber, drawsNumber);
+            case HashFunctionSelector.DOUBLE_CHOICES -> new DoubleChoiceHashFunctionWorker(boxesNumber, drawsNumber);
+            case HashFunctionSelector.LINEAR_OPEN_ADDRESSING -> new LinearOpenAddressingHashFunctionWorker(boxesNumber,
+                                                                                                           drawsNumber
+            );
+            case HashFunctionSelector.QUADRATIC_OPEN_ADDRESSING -> new QuadraticOpenAddressingHashFunctionWorker(boxesNumber,
+                                                                                                                 drawsNumber
+            );
+            default -> throw new IllegalSelectedHashFunctionException(
+                    "The selected hash function is invalid. The selected value : " + function);
+        };
+        this.hashFunctionWorker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
+            if ("progress".equals(event.getPropertyName())) {
+                this.progressCallback();
+            }
+
+            if ("state".equals(event.getPropertyName()) && !this.hashFunctionWorker.isCancelled() && this.hashFunctionWorker.isDone()) {
+                this.doneCallback();
+            }
+        });
+        this.hashFunctionWorker.execute();
+
+        this.actionBar.getReRunButton().setEnabled(true);
+        this.actionBar.getCancelButton().setEnabled(true);
+        this.actionMenu.getCancelItem().setEnabled(true);
+        this.actionMenu.getReRunItem().setEnabled(true);
     }
 
     /**
@@ -242,10 +294,10 @@ public final class SwingView implements View {
      * @since 1.0.0
      */
     private void progressCallback() {
-        //                if (this.progressBar.isIndeterminate()) {
-        //                    this.progressBar.setIndeterminate(false);
-        //                }
-        //                this.progressBar.setValue(this.hashFunctionWorker.getProgress());
+        if (this.progressBar.isIndeterminate()) {
+            this.progressBar.setIndeterminate(false);
+        }
+        this.progressBar.setValue(this.hashFunctionWorker.getProgress());
     }
 
     /**
@@ -285,7 +337,7 @@ public final class SwingView implements View {
             this.disableCancelAction();
             this.enableRunAction();
 
-            //                        this.progressBar.setValue(0);
+            this.progressBar.setValue(0);
             this.progressBar.setEnabled(false);
             this.progressBar.setVisible(false);
         }
@@ -295,47 +347,25 @@ public final class SwingView implements View {
     }
 
     /**
-     * All actions need to run the selected hash function.
+     * Method executed when the event "cancel" is received.
      *
+     * @see com.adavid.visualhasher.presentation.views.components.action.menu.CancelItem
+     * @see com.adavid.visualhasher.presentation.views.components.action.bar.CancelButton
      * @since 1.0.0
      */
-    private void runAction() {
-        //        this.progressBar.setIndeterminate(true);
-        //        this.progressBar.setValue(0);
+    private void cancelCallback() {
+        if (null != this.hashFunctionWorker) {
+            this.hashFunctionWorker.cancel(true);
+            this.hashFunctionWorker = null;
+        }
 
-        final var boxesNumber = this.actionBar.getNumberOfBoxes();
-        final int drawsNumber = this.actionBar.getNumberOfDraws();
-        final var function = Objects.requireNonNull(this.actionBar.getSelectedHashFunction(),
-                                                    "The selected hash function name is null."
-                                                   );
+        this.disableReRunAction();
+        this.disableCancelAction();
+        this.enableRunAction();
 
-        this.hashFunctionWorker = switch (function) {
-            case HashFunctionSelector.CHAINING_FUNCTION -> new ChainingHashFunctionWorker(boxesNumber, drawsNumber);
-            case HashFunctionSelector.DOUBLE_CHOICES -> new DoubleChoiceHashFunctionWorker(boxesNumber, drawsNumber);
-            case HashFunctionSelector.LINEAR_OPEN_ADDRESSING -> new LinearOpenAddressingHashFunctionWorker(boxesNumber,
-                                                                                                           drawsNumber
-            );
-            case HashFunctionSelector.QUADRATIC_OPEN_ADDRESSING -> new QuadraticOpenAddressingHashFunctionWorker(boxesNumber,
-                                                                                                                 drawsNumber
-            );
-            default -> throw new IllegalSelectedHashFunctionException(
-                    "The selected hash function is invalid. The selected value : " + function);
-        };
-        this.hashFunctionWorker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
-            if ("progress".equals(event.getPropertyName())) {
-                this.progressCallback();
-            }
-
-            if ("state".equals(event.getPropertyName()) && this.hashFunctionWorker.isDone()) {
-                this.doneCallback();
-            }
-        });
-        this.hashFunctionWorker.execute();
-
-        this.actionBar.getReRunButton().setEnabled(true);
-        this.actionBar.getCancelButton().setEnabled(true);
-        this.actionMenu.getCancelItem().setEnabled(true);
-        this.actionMenu.getReRunItem().setEnabled(true);
+        this.progressBar.setValue(0);
+        this.progressBar.setEnabled(false);
+        this.progressBar.setVisible(false);
     }
 
     private void disableRunAction() {

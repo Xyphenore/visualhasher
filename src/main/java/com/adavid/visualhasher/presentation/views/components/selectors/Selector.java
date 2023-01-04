@@ -17,29 +17,23 @@
 
 package com.adavid.visualhasher.presentation.views.components.selectors;
 
-import com.adavid.visualhasher.domain.utility.DrawsRange;
-import com.adavid.visualhasher.presentation.views.components.spinners.DrawsSpinner;
-
-import java.io.Serial;
-
 /**
- * The selector for draws for SwingView.
+ * Interface provided a method to get the selected value.
+ *
+ * @param <T> An Object.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class DrawsSelector extends CommonBaseSelector<DrawsRange> {
-    @Serial
-    private static final long serialVersionUID = -1660644508272171907L;
-
+@FunctionalInterface
+public interface Selector<T> {
     /**
-     * Create the default BoxesSelector.
+     * Get the selected value.
+     *
+     * @return Returns T.
      *
      * @since 1.0.0
      */
-    public DrawsSelector() {
-        super(new DrawsSpinner(), "Number of draws");
-    }
+    T getValue();
 }

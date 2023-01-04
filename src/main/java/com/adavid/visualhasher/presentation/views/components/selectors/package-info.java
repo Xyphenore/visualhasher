@@ -20,8 +20,11 @@
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.selectors.Selector}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.selectors.CommonBaseSelector}<br>
  * - {@link com.adavid.visualhasher.presentation.views.components.selectors.BoxesSelector}<br>
  * - {@link com.adavid.visualhasher.presentation.views.components.selectors.DrawsSelector}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.selectors.HashFunctionSelector}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID

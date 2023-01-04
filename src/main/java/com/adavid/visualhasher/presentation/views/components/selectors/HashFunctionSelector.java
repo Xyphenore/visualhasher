@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.hashfunctionsselector;
+package com.adavid.visualhasher.presentation.views.components.selectors;
 
 import com.adavid.visualhasher.domain.exceptions.BlankStringException;
 import com.adavid.visualhasher.domain.exceptions.EmptyFunctionNamesListException;
@@ -25,6 +25,7 @@ import com.adavid.visualhasher.domain.exceptions.IllegalBoxesListException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.MutableComboBoxModel;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -36,9 +37,8 @@ import java.util.Objects;
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class HashFunctionSelector extends JComboBox<String> {
+public final class HashFunctionSelector extends JComboBox<String> implements Selector<String> {
     // Hash functions
-
     /**
      * The chaining hash function. Draws a box number and increments the balls in.
      *
@@ -74,6 +74,8 @@ public final class HashFunctionSelector extends JComboBox<String> {
      * @since 1.0.0
      */
     public static final String QUADRATIC_OPEN_ADDRESSING = "Quadratic Open Addressing Hash Function";
+    @Serial
+    private static final long serialVersionUID = 9196033524365240482L;
 
     /**
      * Create the default hash functions selector.
@@ -141,5 +143,10 @@ public final class HashFunctionSelector extends JComboBox<String> {
         defaultFunctions.add(HashFunctionSelector.QUADRATIC_OPEN_ADDRESSING);
 
         return defaultFunctions;
+    }
+
+    @Override
+    public String getValue() {
+        return (String) super.getSelectedItem();
     }
 }

@@ -17,7 +17,29 @@
 
 package com.adavid.visualhasher.presentation.views.components.selectors;
 
-import javax.swing.JComponent;
+import com.adavid.visualhasher.domain.utility.BoxesRange;
+import com.adavid.visualhasher.presentation.views.components.spinners.BoxesSpinner;
 
-public final class BoxesSelector extends JComponent {
+import java.io.Serial;
+
+/**
+ * The selector for the number of box for the SwingView.
+ *
+ * @author Axel DAVID
+ * @version 1.0.0
+ * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @since 1.0.0
+ */
+public final class BoxesSelector extends CommonBaseSelector<BoxesRange> {
+    @Serial
+    private static final long serialVersionUID = -5568095296570387632L;
+
+    /**
+     * Create the default BoxesSelector.
+     *
+     * @since 1.0.0
+     */
+    public BoxesSelector() {
+        super(new BoxesSpinner(), "Number of boxes");
+    }
 }

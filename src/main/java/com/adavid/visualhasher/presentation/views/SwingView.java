@@ -17,26 +17,28 @@
 
 package com.adavid.visualhasher.presentation.views;
 
-import com.adavid.visualhasher.domain.*;
+import com.adavid.visualhasher.domain.AbstractHashFunctionWorker;
+import com.adavid.visualhasher.domain.ChainingHashFunctionWorker;
+import com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker;
+import com.adavid.visualhasher.domain.HashFunctionResult;
+import com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker;
+import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
-import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.infrastructure.Configuration;
-import com.adavid.visualhasher.presentation.views.components.action.*;
+import com.adavid.visualhasher.presentation.views.components.action.ProgressBar;
+import com.adavid.visualhasher.presentation.views.components.action.bar.SwingActionBar;
+import com.adavid.visualhasher.presentation.views.components.action.menu.SwingActionMenu;
 import com.adavid.visualhasher.presentation.views.components.boxes.Box;
 import com.adavid.visualhasher.presentation.views.components.boxes.BoxesPanel;
-import com.adavid.visualhasher.presentation.views.components.filemenu.FileMenu;
-import com.adavid.visualhasher.presentation.views.components.filemenu.QuitMenuItem;
-import com.adavid.visualhasher.presentation.views.components.futures.helpmenu.AboutMenuItem;
-import com.adavid.visualhasher.presentation.views.components.futures.helpmenu.HelpMenu;
-import com.adavid.visualhasher.presentation.views.components.futures.locales.LocaleMenu;
-import com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector;
-import com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.IllegalSelectedHashFunctionException;
-import com.adavid.visualhasher.presentation.views.components.spinners.BoxesSpinner;
-import com.adavid.visualhasher.presentation.views.components.spinners.DrawsSpinner;
+import com.adavid.visualhasher.presentation.views.components.filemenu.SwingFileMenu;
+import com.adavid.visualhasher.presentation.views.components.selectors.HashFunctionSelector;
+import com.adavid.visualhasher.presentation.views.components.selectors.IllegalSelectedHashFunctionException;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.Collection;
@@ -55,25 +57,15 @@ import java.util.concurrent.ExecutionException;
  */
 public final class SwingView implements View {
     private static final String DEFAULT_TITLE = "VisualHasher";
-
-    private static final Dimension MINIMUM_SIZE = new Dimension(720, 480);
-
-    // Panels
+    private static final Dimension MINIMUM_SIZE = new Dimension(860, 480);
+    private static final String RUN_ACTION = "run";
+    private static final String RE_RUN_ACTION = "re-run";
+    private static final String CANCEL_ACTION = "cancel";
+    private static final String QUIT_ACTION = "quit";
     private final JFrame frame;
-    private final JPanel mainPanel = new JPanel(new GridLayout(14, 1));
-    private final JScrollPane boxesPanel = new BoxesPanel();
 
-    // Selectors
-    private final BoxesSpinner boxesNb = new BoxesSpinner();
-    private final DrawsSpinner drawsNb = new DrawsSpinner();
-    private final HashFunctionSelector hashFunction = new HashFunctionSelector();
-
-    // Buttons and progress bar
-    private final JButton runButton = new RunButton();
-    private final JButton reRunButton = new ReRunButton();
-    private final JButton cancelButton = new CancelButton();
-
-    private final ActionMenu actionMenu;
+    private final SwingActionMenu actionMenu = new SwingActionMenu();
+    private final SwingActionBar actionBar = new SwingActionBar();
     private final JPanel progressBar = new ProgressBar();
 
     private AbstractHashFunctionWorker hashFunctionWorker;
@@ -87,106 +79,46 @@ public final class SwingView implements View {
         this(SwingView.DEFAULT_TITLE);
     }
 
+    /**
+     * Create the SwingView with the specified title.
+     *
+     * @param title String. The title of the view.
+     *
+     * @since 1.0.0
+     */
     public SwingView(final String title) {
         super();
 
         this.frame = new JFrame(Objects.requireNonNull(title, "The title is null. Please give a title not null."));
         this.frame.setMinimumSize(SwingView.MINIMUM_SIZE);
 
-        this.drawsNb.setInterval(new DrawsRange(new NumberOfBoxes(this.boxesNb.getValue())));
+        this.actionBar.getDrawsSelector().setInterval(new DrawsRange(this.actionBar.getNumberOfBoxes()));
+
+        this.initializeActionItemListeners();
 
         final var header = new JPanel(new GridLayout(2, 1));
-        header.add(new ActionBar());
+        header.add(this.actionBar);
         header.add(this.progressBar);
-        this.mainPanel.add(header);
+        final var mainPanel = new JPanel(new GridLayout(12, 1));
+        mainPanel.add(header);
 
-        this.mainPanel.add(this.boxesPanel);
+        // TODO Add the text area
 
-        this.boxesNb.addChangeListener((final ChangeEvent ignored) -> {
-            final var boxesNbValue = this.boxesNb.getValue();
-            this.drawsNb.setInterval(new DrawsRange(new NumberOfBoxes(boxesNbValue)));
-            this.drawsNb.setValue(boxesNbValue);
-        });
+        final var boxesPanel = new BoxesPanel();
+        mainPanel.add(boxesPanel);
 
-        this.runButton.addActionListener((final ActionEvent event) -> {
-            if ("run".equals(event.getActionCommand())) {
-                this.runButton.setEnabled(false);
-                this.runButton.setVisible(false);
-                this.runButton.setFocusable(false);
+        final var menuBar = this.createMenuBar();
 
-                this.reRunButton.setVisible(true);
-                this.reRunButton.setFocusable(true);
+        this.frame.setJMenuBar(menuBar);
+        this.frame.setContentPane(mainPanel);
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
 
-                this.cancelButton.setVisible(true);
-                this.cancelButton.setFocusable(true);
-
-                this.progressBar.setEnabled(true);
-                this.progressBar.setVisible(true);
-
-                this.runAction();
-            }
-        });
-
-        this.reRunButton.addActionListener((final ActionEvent event) -> {
-            if ("re-run".equals(event.getActionCommand())) {
-                if (null != this.hashFunctionWorker) {
-                    this.hashFunctionWorker.cancel(true);
-                    this.hashFunctionWorker = null;
-                }
-
-                this.reRunButton.setEnabled(false);
-                this.cancelButton.setEnabled(false);
-
-                this.runAction();
-            }
-        });
-
-        this.cancelButton.addActionListener((final ActionEvent event) -> {
-            if ("cancel".equals(event.getActionCommand())) {
-                if (null != this.hashFunctionWorker) {
-                    this.hashFunctionWorker.cancel(true);
-                    this.hashFunctionWorker = null;
-                }
-
-                this.reRunButton.setEnabled(false);
-                this.reRunButton.setVisible(false);
-                this.reRunButton.setFocusable(false);
-
-                this.cancelButton.setEnabled(false);
-                this.cancelButton.setVisible(false);
-                this.cancelButton.setFocusable(false);
-
-                this.runButton.setEnabled(true);
-                this.runButton.setVisible(true);
-                this.runButton.setFocusable(true);
-
-                this.progressBar.setValue(0);
-                this.progressBar.setEnabled(false);
-                this.progressBar.setVisible(false);
-            }
-        });
-
-        final var fileMenu = new FileMenu(new QuitMenuItem());
+    private JMenuBar createMenuBar() {
+        final var fileMenu = new SwingFileMenu();
         fileMenu.getQuit().addActionListener((final ActionEvent event) -> {
-            if ("quit".equals(event.getActionCommand())) {
+            if (SwingView.QUIT_ACTION.equals(event.getActionCommand())) {
                 this.frame.dispose();
-            }
-        });
-
-        this.actionMenu = new ActionMenu(new RunItem(), new ReRunItem(), new CancelItem());
-        this.actionMenu.getRunItem().addActionListener((final ActionEvent event) -> {
-            if ("run".equals(event.getActionCommand())) {
-                this.runCallback();
-            }
-        });
-        this.actionMenu.getReRunItem().addActionListener((final ActionEvent event) -> {
-            if ("re-run".equals(event.getActionCommand())) {
-                this.reRunCallback();
-            }
-        });
-        this.actionMenu.getCancelItem().addActionListener((final ActionEvent event) -> {
-            if ("cancel".equals(event.getActionCommand())) {
-                this.cancelCallback();
             }
         });
 
@@ -194,20 +126,188 @@ public final class SwingView implements View {
         menuBar.add(fileMenu);
         menuBar.add(this.actionMenu);
 
-        this.frame.setJMenuBar(menuBar);
-        this.frame.setContentPane(this.getViewport());
-        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        return menuBar;
     }
 
-    private void runAction() {
-        this.progressBar.setIndeterminate(true);
-        this.progressBar.setValue(0);
+    /**
+     * Create listeners on all component action.
+     *
+     * @since 1.0.0
+     */
+    private void initializeActionItemListeners() {
+        this.actionBar.getRunButton().addActionListener((final ActionEvent event) -> {
+            if (SwingView.RUN_ACTION.equals(event.getActionCommand())) {
+                this.runCallback();
+            }
+        });
+        this.actionBar.getReRunButton().addActionListener((final ActionEvent event) -> {
+            if (SwingView.RE_RUN_ACTION.equals(event.getActionCommand())) {
+                this.reRunCallback();
+            }
+        });
+        this.actionBar.getCancelButton().addActionListener((final ActionEvent event) -> {
+            if (SwingView.CANCEL_ACTION.equals(event.getActionCommand())) {
+                this.cancelCallback();
+            }
+        });
 
-        final var boxesNumber = new NumberOfBoxes(this.boxesNb.getValue());
-        final var drawsNumber = (int) this.drawsNb.getValue();
-        final var function = (String) Objects.requireNonNull(this.hashFunction.getSelectedItem(),
-                                                             "Selected hash function name is null."
-                                                            );
+        this.actionMenu.getRunItem().addActionListener((final ActionEvent event) -> {
+            if (SwingView.RUN_ACTION.equals(event.getActionCommand())) {
+                this.runCallback();
+            }
+        });
+        this.actionMenu.getReRunItem().addActionListener((final ActionEvent event) -> {
+            if (SwingView.RE_RUN_ACTION.equals(event.getActionCommand())) {
+                this.reRunCallback();
+            }
+        });
+        this.actionMenu.getCancelItem().addActionListener((final ActionEvent event) -> {
+            if (SwingView.CANCEL_ACTION.equals(event.getActionCommand())) {
+                this.cancelCallback();
+            }
+        });
+    }
+
+    /**
+     * Method executed when the event "run" is received.
+     *
+     * @see com.adavid.visualhasher.presentation.views.components.action.menu.RunItem
+     * @see com.adavid.visualhasher.presentation.views.components.action.bar.RunButton
+     * @since 1.0.0
+     */
+    private void runCallback() {
+        this.disableRunAction();
+        this.enableReRunAction();
+        this.enableCancelAction();
+
+        this.actionBar.getReRunButton().setEnabled(false);
+        this.actionBar.getCancelButton().setEnabled(false);
+        this.actionMenu.getReRunItem().setEnabled(false);
+        this.actionMenu.getCancelItem().setEnabled(false);
+
+        this.progressBar.setEnabled(true);
+        this.progressBar.setVisible(true);
+
+        this.runAction();
+    }
+
+    /**
+     * Method executed when the event "re-run" is received.
+     *
+     * @see com.adavid.visualhasher.presentation.views.components.action.menu.ReRunItem
+     * @see com.adavid.visualhasher.presentation.views.components.action.bar.ReRunButton
+     * @since 1.0.0
+     */
+    private void reRunCallback() {
+        if (null != this.hashFunctionWorker) {
+            this.hashFunctionWorker.cancel(true);
+            this.hashFunctionWorker = null;
+        }
+
+        this.actionBar.getReRunButton().setEnabled(false);
+        this.actionBar.getCancelButton().setEnabled(false);
+
+        this.actionMenu.getReRunItem().setEnabled(false);
+        this.actionMenu.getCancelItem().setEnabled(false);
+
+        this.runAction();
+    }
+
+    /**
+     * Method executed when the event "cancel" is received.
+     *
+     * @see com.adavid.visualhasher.presentation.views.components.action.menu.CancelItem
+     * @see com.adavid.visualhasher.presentation.views.components.action.bar.CancelButton
+     * @since 1.0.0
+     */
+    private void cancelCallback() {
+        if (null != this.hashFunctionWorker) {
+            this.hashFunctionWorker.cancel(true);
+            this.hashFunctionWorker = null;
+        }
+
+        this.disableReRunAction();
+        this.disableCancelAction();
+        this.enableRunAction();
+
+        //                this.progressBar.setValue(0);
+        this.progressBar.setEnabled(false);
+        this.progressBar.setVisible(false);
+    }
+
+    /**
+     * Method executed on the event "progress" from the Hash Function Worker.
+     *
+     * @see AbstractHashFunctionWorker
+     * @since 1.0.0
+     */
+    private void progressCallback() {
+        //                if (this.progressBar.isIndeterminate()) {
+        //                    this.progressBar.setIndeterminate(false);
+        //                }
+        //                this.progressBar.setValue(this.hashFunctionWorker.getProgress());
+    }
+
+    /**
+     * Method executed when the hash function worker done it compute.
+     *
+     * @see com.adavid.visualhasher.domain.AbstractHashFunctionWorker
+     * @since 1.0.0
+     */
+    private void doneCallback() {
+        try {
+            final HashFunctionResult result = this.hashFunctionWorker.get();
+            // TODO Ajouter les boxes à l'écran
+
+            //                        result.boxes().forEach(this.boxesPanel::add);
+
+            System.out.println(result.information());
+            final class Output extends Thread {
+                private final Collection<? extends Box> boxes;
+
+                private Output(final List<? extends Box> boxes) {
+                    super();
+                    this.boxes = new Vector<>(boxes);
+
+                }
+
+                @Override
+                public void run() {
+                    this.boxes.parallelStream().forEach(System.out::println);
+                }
+            }
+            new Output(result.boxes()).start();
+
+            final var box = result.boxes().get(0);
+            //                        this.boxesPanel.add(box);
+
+            this.disableReRunAction();
+            this.disableCancelAction();
+            this.enableRunAction();
+
+            //                        this.progressBar.setValue(0);
+            this.progressBar.setEnabled(false);
+            this.progressBar.setVisible(false);
+        }
+        catch (final InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * All actions need to run the selected hash function.
+     *
+     * @since 1.0.0
+     */
+    private void runAction() {
+        //        this.progressBar.setIndeterminate(true);
+        //        this.progressBar.setValue(0);
+
+        final var boxesNumber = this.actionBar.getNumberOfBoxes();
+        final int drawsNumber = this.actionBar.getNumberOfDraws();
+        final var function = Objects.requireNonNull(this.actionBar.getSelectedHashFunction(),
+                                                    "The selected hash function name is null."
+                                                   );
 
         this.hashFunctionWorker = switch (function) {
             case HashFunctionSelector.CHAINING_FUNCTION -> new ChainingHashFunctionWorker(boxesNumber, drawsNumber);
@@ -219,173 +319,91 @@ public final class SwingView implements View {
                                                                                                                  drawsNumber
             );
             default -> throw new IllegalSelectedHashFunctionException(
-                    "The selected hash function is invalid. The selected value : " + this.hashFunction);
+                    "The selected hash function is invalid. The selected value : " + function);
         };
-
         this.hashFunctionWorker.addPropertyChangeListener((final PropertyChangeEvent event) -> {
             if ("progress".equals(event.getPropertyName())) {
-                if (this.progressBar.isIndeterminate()) {
-                    this.progressBar.setIndeterminate(false);
-                }
-                this.progressBar.setValue(this.hashFunctionWorker.getProgress());
+                this.progressCallback();
             }
 
-            if ("state".equals(event.getPropertyName())) {
-                if (this.hashFunctionWorker.isDone()) {
-                    try {
-                        final HashFunctionResult result = this.hashFunctionWorker.get();
-                        // TODO Ajouter les boxes à l'écran
-
-                        //                        result.boxes().forEach(this.boxesPanel::add);
-
-                        System.out.println(result.information());
-                        final class Output extends Thread {
-                            private final Collection<? extends Box> boxes;
-
-                            private Output(final List<? extends Box> boxes) {
-                                super();
-                                this.boxes = new Vector<>(boxes);
-
-                            }
-
-                            public void run() {
-                                this.boxes.parallelStream().forEach(System.out::println);
-                            }
-                        }
-                        //                        result.boxes().parallelStream().forEach(System.out::println);
-                        new Output(result.boxes()).start();
-
-                        final var box = result.boxes().get(0);
-                        //                        this.boxesPanel.add(box);
-
-                        this.reRunButton.setEnabled(false);
-                        this.reRunButton.setVisible(false);
-                        this.reRunButton.setFocusable(false);
-
-                        this.cancelButton.setEnabled(false);
-                        this.cancelButton.setVisible(false);
-                        this.cancelButton.setFocusable(false);
-
-                        this.runButton.setEnabled(true);
-                        this.runButton.setVisible(true);
-                        this.runButton.setFocusable(true);
-
-                        this.progressBar.setValue(0);
-                        this.progressBar.setEnabled(false);
-                        this.progressBar.setVisible(false);
-                    }
-                    catch (final InterruptedException | ExecutionException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+            if ("state".equals(event.getPropertyName()) && this.hashFunctionWorker.isDone()) {
+                this.doneCallback();
             }
         });
         this.hashFunctionWorker.execute();
 
-        this.reRunButton.setEnabled(true);
-        this.cancelButton.setEnabled(true);
+        this.actionBar.getReRunButton().setEnabled(true);
+        this.actionBar.getCancelButton().setEnabled(true);
+        this.actionMenu.getCancelItem().setEnabled(true);
+        this.actionMenu.getReRunItem().setEnabled(true);
     }
 
-    private void runCallback() {
-        this.runButton.setEnabled(false);
-        this.runButton.setVisible(false);
-        this.runButton.setFocusable(false);
-
-        this.reRunButton.setVisible(true);
-        this.reRunButton.setFocusable(true);
-
-        this.cancelButton.setVisible(true);
-        this.cancelButton.setFocusable(true);
+    private void disableRunAction() {
+        final var runButton = this.actionBar.getRunButton();
+        runButton.setEnabled(false);
+        runButton.setVisible(false);
+        runButton.setFocusable(false);
 
         final var runItem = this.actionMenu.getRunItem();
         runItem.setEnabled(false);
         runItem.setFocusable(false);
+    }
+
+    private void enableRunAction() {
+        final var runButton = this.actionBar.getRunButton();
+        runButton.setEnabled(true);
+        runButton.setVisible(true);
+        runButton.setFocusable(true);
+
+        final var runItem = this.actionMenu.getRunItem();
+        runItem.setEnabled(true);
+        runItem.setFocusable(true);
+    }
+
+    private void disableReRunAction() {
+        final var reRunButton = this.actionBar.getReRunButton();
+        reRunButton.setEnabled(false);
+        reRunButton.setVisible(false);
+        reRunButton.setFocusable(false);
 
         final var reRunItem = this.actionMenu.getReRunItem();
-        reRunItem.setVisible(true);
+        reRunItem.setEnabled(false);
+        reRunItem.setFocusable(false);
+    }
+
+    private void enableReRunAction() {
+        final var reRunButton = this.actionBar.getReRunButton();
+        reRunButton.setVisible(true);
+        reRunButton.setEnabled(true);
+        reRunButton.setFocusable(true);
+
+        final var reRunItem = this.actionMenu.getReRunItem();
+        reRunItem.setEnabled(true);
         reRunItem.setFocusable(true);
+    }
+
+    private void disableCancelAction() {
+        final var cancelButton = this.actionBar.getCancelButton();
+        cancelButton.setEnabled(false);
+        cancelButton.setVisible(false);
+        cancelButton.setFocusable(false);
 
         final var cancelItem = this.actionMenu.getCancelItem();
-        cancelItem.setVisible(true);
+        cancelItem.setEnabled(false);
+        cancelItem.setFocusable(false);
+    }
+
+    private void enableCancelAction() {
+        final var cancelButton = this.actionBar.getCancelButton();
+        cancelButton.setVisible(true);
+        cancelButton.setFocusable(true);
+        cancelButton.setEnabled(true);
+
+        final var cancelItem = this.actionMenu.getCancelItem();
         cancelItem.setFocusable(true);
-
-        this.progressBar.setEnabled(true);
-        this.progressBar.setVisible(true);
-
-        this.runAction();
+        cancelItem.setEnabled(true);
     }
 
-    private void reRunCallback() {
-
-    }
-
-    private void cancelCallback() {
-
-    }
-
-    private Container getViewport() {
-        return this.mainPanel;
-    }
-
-    /**
-     * For the v1.1.0
-     *
-     * @param fileMenu JMenuBar. The file menu.
-     *
-     * @implNote For v1.1.0
-     * @since 1.1.0
-     */
-    private static void addLanguageMenu(final JMenu fileMenu) {
-        final var notNullMenu = Objects.requireNonNull(fileMenu, "The file menu is null. Please give a menu not null.");
-
-        final var languages = new LocaleMenu();
-        notNullMenu.add(languages);
-
-        notNullMenu.addSeparator();
-    }
-
-    /**
-     * For the v1.1.0
-     *
-     * @param bar JMenuBar. The menu bar.
-     * @param frame JFrame. The frame where the about's dialog show.
-     *
-     * @implNote For v1.1.0
-     * @since 1.1.0
-     */
-    private static void addHelpMenu(final JMenuBar bar, final JFrame frame) {
-        final var notNullMenu = Objects.requireNonNull(bar, "The menu bar is null. Please give a menu not null.");
-        final var notNullFrame = Objects.requireNonNull(frame, "The frame is null. Please give a frame not null.");
-
-
-        final var helpMenu = new HelpMenu();
-        final var about = new AboutMenuItem();
-        about.addActionListener((final ActionEvent event) -> {
-            if ("about".equals(event.getActionCommand())) {
-                final var aboutDialog = new JDialog(notNullFrame, "About", Dialog.ModalityType.APPLICATION_MODAL);
-                aboutDialog.setVisible(true);
-                aboutDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                aboutDialog.setAlwaysOnTop(true);
-                aboutDialog.setFocusable(true);
-                aboutDialog.setEnabled(true);
-                aboutDialog.setResizable(false);
-                aboutDialog.setSize(new Dimension(480, 360));
-                aboutDialog.setMinimumSize(new Dimension(480, 360));
-                aboutDialog.setMaximumSize(new Dimension(480, 360));
-
-                final var title = new JTextArea("VisualHasher – v" + Configuration.VERSION);
-                final var information = new JTextArea("Show the repartition of different hash functions for " + "customizable number of boxes and number of draws." + " ");
-                final var license = new JTextArea("VisualHasher Copyright (C) 2022-2023 DAVID Axel - GPLv3");
-
-                aboutDialog.add(title);
-                aboutDialog.add(information);
-                aboutDialog.add(license);
-            }
-        });
-        helpMenu.add(about);
-
-        notNullMenu.add(helpMenu);
-    }
 
     @Override
     public void execute() {

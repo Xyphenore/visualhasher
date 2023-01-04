@@ -15,69 +15,58 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;
 
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import java.io.Serial;
 
 /**
- * The action menu.
+ * Implementation of the ActionMenu for the SwingView.
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see RunItem
  * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @see ActionMenu
+ * @see JMenu
  * @since 1.0.0
  */
-public final class ActionMenu extends JMenu {
+public final class SwingActionMenu extends JMenu implements ActionMenu {
     @Serial
     private static final long serialVersionUID = 6693041031716416612L;
+    private static final String NAME = "Action";
 
-    private RunItem runItem;
-    private ReRunItem reRunItem;
-    private CancelItem cancelItem;
+    private final JMenuItem runItem = new RunItem();
+    private final JMenuItem reRunItem = new ReRunItem();
+    private final JMenuItem cancelItem = new CancelItem();
 
     /**
      * Create the default action menu.
      *
      * @since 1.0.0
      */
-    public ActionMenu() {
-        this(null, null, null);
-    }
-
-    public ActionMenu(final RunItem runItem, final ReRunItem reRunItem, final CancelItem cancelItem) {
-        super("Action");
-        super.getAccessibleContext().setAccessibleName("Action");
+    public SwingActionMenu() {
+        super(SwingActionMenu.NAME);
+        super.getAccessibleContext().setAccessibleName(SwingActionMenu.NAME);
         super.getAccessibleContext().setAccessibleDescription(
                 "Action menu permits running, cancel or re-run the computing of the hash function.");
-
-        this.runItem = runItem;
-        this.reRunItem = reRunItem;
-        this.cancelItem = cancelItem;
+        super.add(this.runItem);
+        super.add(this.reRunItem);
+        super.add(this.cancelItem);
     }
 
-    public RunItem getRunItem() {
+    @Override
+    public JMenuItem getRunItem() {
         return this.runItem;
     }
 
-    public void setRunItem(final RunItem runItem) {
-        this.runItem = runItem;
-    }
-
-    public ReRunItem getReRunItem() {
+    @Override
+    public JMenuItem getReRunItem() {
         return this.reRunItem;
     }
 
-    public void setReRunItem(final ReRunItem reRunItem) {
-        this.reRunItem = reRunItem;
-    }
-
-    public CancelItem getCancelItem() {
+    @Override
+    public JMenuItem getCancelItem() {
         return this.cancelItem;
-    }
-
-    public void setCancelItem(final CancelItem cancelItem) {
-        this.cancelItem = cancelItem;
     }
 }

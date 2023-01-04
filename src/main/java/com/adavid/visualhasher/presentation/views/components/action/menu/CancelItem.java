@@ -15,12 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
+import java.util.Locale;
 
 /**
  * The cancel item.
@@ -29,25 +31,37 @@ import java.awt.event.KeyEvent;
  * @version 1.0.0
  * @see ActionMenu
  * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @see JMenuItem
  * @since 1.0.0
  */
 public final class CancelItem extends JMenuItem {
+    private static final String CANCEL_LOWER_CASE = "cancel";
+    private static final String CANCEL_INIT_CASE = CancelItem.generateCancelName();
+    private static final String INFORMATION = "Cancel the computing hash function.";
+    @Serial
+    private static final long serialVersionUID = 2588506472229935277L;
+
     /**
      * Create the default cancel item.
      *
      * @since 1.0.0
      */
-    public CancelItem() {
-        super("Cancel");
+    CancelItem() {
+        super(CancelItem.CANCEL_INIT_CASE);
         super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
-        super.setActionCommand("cancel");
+        super.setActionCommand(CancelItem.CANCEL_LOWER_CASE);
         super.setEnabled(false);
-        super.setToolTipText("Cancel the computing hash function.");
-        super.setName("cancel");
+        super.setToolTipText(CancelItem.INFORMATION);
+        super.setName(CancelItem.CANCEL_LOWER_CASE);
         super.setVisible(true);
         super.setOpaque(true);
         super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Cancel");
-        super.getAccessibleContext().setAccessibleDescription("Cancel the computing hash function.");
+        super.getAccessibleContext().setAccessibleName(CancelItem.CANCEL_INIT_CASE);
+        super.getAccessibleContext().setAccessibleDescription(CancelItem.INFORMATION);
+    }
+
+    private static String generateCancelName() {
+        return CancelItem.CANCEL_LOWER_CASE.substring(0, 1)
+                                           .toUpperCase(Locale.ENGLISH) + CancelItem.CANCEL_LOWER_CASE.substring(1);
     }
 }

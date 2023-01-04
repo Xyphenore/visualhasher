@@ -15,12 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 
 /**
  * The re-run item.
@@ -29,26 +30,32 @@ import java.awt.event.KeyEvent;
  * @version 1.0.0
  * @see ActionMenu
  * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @see JMenuItem
  * @since 1.0.0
  */
 public final class ReRunItem extends JMenuItem {
+    @Serial
+    private static final long serialVersionUID = 4461792047936751583L;
+    private static final String INFORMATION = "Cancel the computing hash function, and run the selected hash function.";
+    private static final String RE_RUN_LOWER_CASE = "re-run";
+    private static final String RE_RUN_INIT_CASE = "Re-Run";
+
     /**
      * Create the default re-run item.
      *
      * @since 1.0.0
      */
-    public ReRunItem() {
-        super("Re-Run");
+    ReRunItem() {
+        super(ReRunItem.RE_RUN_INIT_CASE);
         super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
-        super.setActionCommand("re-run");
+        super.setActionCommand(ReRunItem.RE_RUN_LOWER_CASE);
         super.setEnabled(false);
-        super.setToolTipText("Cancel the computing hash function, and run the selected hash function.");
-        super.setName("re-run");
+        super.setToolTipText(ReRunItem.INFORMATION);
+        super.setName(ReRunItem.RE_RUN_LOWER_CASE);
         super.setVisible(true);
         super.setOpaque(true);
         super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Re-Run");
-        super.getAccessibleContext().setAccessibleDescription(
-                "Cancel the computing hash function, and run the selected hash function.");
+        super.getAccessibleContext().setAccessibleName(ReRunItem.RE_RUN_INIT_CASE);
+        super.getAccessibleContext().setAccessibleDescription(ReRunItem.INFORMATION);
     }
 }

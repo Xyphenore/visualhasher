@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,17 @@
  */
 
 /**
- * All components for HashFunctionsSelector.
+ * All components for the action bar.
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.bar.SwingActionBar}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.bar.RunButton}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.bar.ReRunButton}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.bar.CancelButton}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation.views.components.hashfunctionsselector.HashFunctionSelector
  * @since 1.0.0
  */
-package com.adavid.visualhasher.presentation.views.components.hashfunctionsselector;
+package com.adavid.visualhasher.presentation.views.components.action.bar;

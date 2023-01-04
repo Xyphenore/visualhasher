@@ -16,18 +16,18 @@
  */
 
 /**
- * All components for ActionMenu.
+ * All components for the action menu.
  *
  * <br><br>
  * <u><b>Components list:</b></u><br>
  * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.ActionMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.SwingActionMenu}<br>
+ * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.CancelItem}<br>
  * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.RunItem}<br>
  * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.ReRunItem}<br>
- * - {@link com.adavid.visualhasher.presentation.views.components.action.menu.CancelItem}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation.views.components.action.menu.ActionMenu
  * @since 1.0.0
  */
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;

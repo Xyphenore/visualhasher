@@ -15,12 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
+import java.util.Locale;
 
 /**
  * The run item.
@@ -29,25 +31,36 @@ import java.awt.event.KeyEvent;
  * @version 1.0.0
  * @see ActionMenu
  * @see com.adavid.visualhasher.presentation.views.SwingView
+ * @see JMenuItem
  * @since 1.0.0
  */
 public final class RunItem extends JMenuItem {
+    @Serial
+    private static final long serialVersionUID = 2425172550498041971L;
+    private static final String INFORMATION = "Run the selected hash function.";
+    private static final String RUN_LOWER_CASE = "run";
+    private static final String RUN_INIT_CASE = RunItem.generateRunName();
+
     /**
      * Create the default run item.
      *
      * @since 1.0.0
      */
-    public RunItem() {
-        super("Run");
+    RunItem() {
+        super(RunItem.RUN_INIT_CASE);
         super.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-        super.setActionCommand("run");
+        super.setActionCommand(RunItem.RUN_LOWER_CASE);
         super.setEnabled(true);
-        super.setToolTipText("Run the selected hash function.");
-        super.setName("run");
+        super.setToolTipText(RunItem.INFORMATION);
+        super.setName(RunItem.RUN_LOWER_CASE);
         super.setVisible(true);
         super.setOpaque(true);
         super.setHideActionText(false);
-        super.getAccessibleContext().setAccessibleName("Run");
-        super.getAccessibleContext().setAccessibleDescription("Run the selected hash function.");
+        super.getAccessibleContext().setAccessibleName(RunItem.RUN_INIT_CASE);
+        super.getAccessibleContext().setAccessibleDescription(RunItem.INFORMATION);
+    }
+
+    private static String generateRunName() {
+        return RunItem.RUN_LOWER_CASE.substring(0, 1).toUpperCase(Locale.ENGLISH) + RunItem.RUN_LOWER_CASE.substring(1);
     }
 }

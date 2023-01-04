@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.bar;
 
 import javax.swing.JButton;
 import java.io.Serial;
@@ -36,7 +36,7 @@ public final class RunButton extends JButton {
      *
      * @since 1.0.0
      */
-    public RunButton() {
+    RunButton() {
         super("Run");
         super.setEnabled(true);
         super.setVisible(true);

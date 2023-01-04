@@ -15,37 +15,47 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.action;
+package com.adavid.visualhasher.presentation.views.components.action.menu;
 
-import javax.swing.JButton;
-import java.io.Serial;
+import javax.swing.JMenuItem;
 
 /**
- * ReRunButton.
+ * The action menu interface.
+ * Provided getters for elements of the action menu.
  *
  * @author Axel DAVID
  * @version 1.0.0
+ * @see com.adavid.visualhasher.presentation.views.SwingView
  * @since 1.0.0
  */
-public final class ReRunButton extends JButton {
-    @Serial
-    private static final long serialVersionUID = 1474488170073873249L;
-
+public interface ActionMenu {
     /**
-     * Create the default ReRunButton.
+     * Get the run menu item.
      *
+     * @return JMenuItem Returns the runItem.
+     *
+     * @see RunItem
      * @since 1.0.0
      */
-    public ReRunButton() {
-        super("Re-Run");
-        super.setEnabled(false);
-        super.setVisible(false);
-        super.setFocusable(false);
-        super.setName("reRunButton");
-        super.setOpaque(true);
-        super.setToolTipText(
-                "Stop the running operation and run the selected hash function with provided number of boxes and number of draws.");
-        super.setHideActionText(false);
-        super.setActionCommand("re-run");
-    }
+    JMenuItem getRunItem();
+
+    /**
+     * Get the re-run menu item.
+     *
+     * @return JMenuItem Returns the reRunItem.
+     *
+     * @see ReRunItem
+     * @since 1.0.0
+     */
+    JMenuItem getReRunItem();
+
+    /**
+     * Get the cancel menu item.
+     *
+     * @return JMenuItem Returns the cancelItem.
+     *
+     * @see CancelItem
+     * @since 1.0.0
+     */
+    JMenuItem getCancelItem();
 }

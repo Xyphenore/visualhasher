@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@ package com.adavid.visualhasher.domain;
 
 import com.adavid.visualhasher.domain.exceptions.CannotComputeIndexException;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.presentation.views.components.boxes.ColoredBox;
-import com.adavid.visualhasher.presentation.views.components.boxes.OpenAddessingBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,11 +75,11 @@ public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHas
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final var boxes = Collections.synchronizedList(new ArrayList<ColoredBox>(boxesSize));
+        final var boxes = Collections.synchronizedList(new ArrayList<ComputedBox>(boxesSize));
         var maxBalls = 0;
         final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
-            boxes.add(new OpenAddessingBox(i, false));
+            boxes.add(new ComputedBox(i, 0, true, false));
         }
 
         final var draws = this.getDraws();
@@ -120,8 +118,8 @@ public final class QuadraticOpenAddressingHashFunctionWorker extends AbstractHas
                 }
 
                 if (QuadraticOpenAddressingHashFunctionWorker.MAX_TRY >= delta) {
-                    final var color = 0 == retry && 0 == delta ? ColoredBox.Color.GREEN : ColoredBox.Color.RED;
-                    boxes.get(indexBox).incrementsBalls(color);
+                    boxes.get(indexBox).setFirstBox(0 == retry && 0 == delta);
+                    boxes.get(indexBox).incrementsBalls();
 
                     break;
                 }

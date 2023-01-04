@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,5 +92,10 @@ public abstract class AbstractHashFunctionWorker extends SwingWorker<HashFunctio
     final int compute() {
         // noinspection UnsecureRandomNumberGeneration
         return Math.toIntExact(Math.round(Math.random() * (this.boxes - 1)));
+    }
+
+    @Override
+    public void done() {
+
     }
 }

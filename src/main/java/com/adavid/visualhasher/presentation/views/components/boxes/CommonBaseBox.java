@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@
 
 package com.adavid.visualhasher.presentation.views.components.boxes;
 
+import com.adavid.visualhasher.domain.Box;
+
+import javax.swing.BoxLayout;
 import javax.swing.DropMode;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -38,6 +41,7 @@ public class CommonBaseBox extends JPanel implements Box {
     private final JTextArea idField;
     private final JTextArea ballsNumber;
 
+    private final int id;
     private int balls;
     private ColoredBox.Color color = ColoredBox.Color.GREEN;
 
@@ -60,7 +64,10 @@ public class CommonBaseBox extends JPanel implements Box {
                     "Cannot create a NumberBox with a number less than 0. Please give a number greater or equal to 0.");
         }
 
+        super.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
         this.balls = balls;
+        this.id = id;
 
         this.idField = new JTextArea(String.valueOf(id));
         this.idField.setEnabled(true);
@@ -80,10 +87,8 @@ public class CommonBaseBox extends JPanel implements Box {
         this.ballsNumber.setName("ballsNumber");
         this.ballsNumber.setVisible(true);
 
-        this.add(this.idField);
-        this.add(this.ballsNumber);
-
-        // TODO Faire la mise en page
+        super.add(this.idField);
+        super.add(this.ballsNumber);
 
         this.setEnabled(true);
         this.setOpaque(true);
@@ -100,6 +105,7 @@ public class CommonBaseBox extends JPanel implements Box {
 
         this.balls = filled ? 1 : 0;
         this.color = color;
+        this.id = id;
 
         this.idField = new JTextArea(String.valueOf(id));
         this.idField.setEnabled(true);
@@ -191,6 +197,11 @@ public class CommonBaseBox extends JPanel implements Box {
         }
         --this.balls;
         this.ballsNumber.setText(String.valueOf(this.balls));
+    }
+
+    @Override
+    public int getID() {
+        return this.id;
     }
 
     protected ColoredBox.Color getColor() {

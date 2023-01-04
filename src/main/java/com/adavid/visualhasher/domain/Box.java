@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.adavid.visualhasher.presentation.views.components.boxes;
+package com.adavid.visualhasher.domain;
 
 /**
  * The interface of a Box.
@@ -63,4 +63,13 @@ public interface Box {
      * @since 1.0.0
      */
     void decrementBalls();
+
+    /**
+     * Get the ID of the box.
+     *
+     * @return Integer
+     *
+     * @since 1.0.0
+     */
+    int getID();
 }

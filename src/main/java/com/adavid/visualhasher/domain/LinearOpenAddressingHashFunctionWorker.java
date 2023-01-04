@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@ package com.adavid.visualhasher.domain;
 
 import com.adavid.visualhasher.domain.exceptions.AlreadyMadeLoopException;
 import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
-import com.adavid.visualhasher.presentation.views.components.boxes.ColoredBox;
-import com.adavid.visualhasher.presentation.views.components.boxes.OpenAddessingBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,11 +72,11 @@ public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFu
         // TODO use publish method to send data to process
 
         final int boxesSize = this.getBoxes();
-        final List<ColoredBox> boxes = Collections.synchronizedList(new ArrayList<>(boxesSize));
+        final List<ComputedBox> boxes = Collections.synchronizedList(new ArrayList<>(boxesSize));
         var maxBalls = 0;
         final var maxBoxesIndexes = Collections.synchronizedList(new ArrayList<Integer>());
         for (var i = 0; i < boxesSize; ++i) {
-            boxes.add(new OpenAddessingBox(i, false));
+            boxes.add(new ComputedBox(i, 0, true, false));
         }
 
         final var draws = this.getDraws();
@@ -110,8 +108,8 @@ public final class LinearOpenAddressingHashFunctionWorker extends AbstractHashFu
                 break;
             }
 
-            final var color = doLoop ? ColoredBox.Color.RED : ColoredBox.Color.GREEN;
-            boxes.get(indexBox).incrementsBalls(color);
+            boxes.get(indexBox).setFirstBox(doLoop);
+            boxes.get(indexBox).incrementsBalls();
 
             if (maxBalls != Math.max(maxBalls, boxes.get(indexBox).getBalls())) {
                 maxBalls = Math.max(maxBalls, boxes.get(indexBox).getBalls());

@@ -18,7 +18,9 @@
 package com.adavid.visualhasher.presentation.views;
 
 import com.adavid.visualhasher.domain.AbstractHashFunctionWorker;
+import com.adavid.visualhasher.domain.Box;
 import com.adavid.visualhasher.domain.ChainingHashFunctionWorker;
+import com.adavid.visualhasher.domain.ComputedBox;
 import com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker;
 import com.adavid.visualhasher.domain.HashFunctionResult;
 import com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker;
@@ -26,8 +28,10 @@ import com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
 import com.adavid.visualhasher.presentation.views.components.action.bar.SwingActionBar;
 import com.adavid.visualhasher.presentation.views.components.action.menu.SwingActionMenu;
-import com.adavid.visualhasher.presentation.views.components.boxes.Box;
 import com.adavid.visualhasher.presentation.views.components.boxes.BoxesPanel;
+import com.adavid.visualhasher.presentation.views.components.boxes.ColoredBox;
+import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
+import com.adavid.visualhasher.presentation.views.components.boxes.OpenAddessingBox;
 import com.adavid.visualhasher.presentation.views.components.filemenu.SwingFileMenu;
 import com.adavid.visualhasher.presentation.views.components.selectors.HashFunctionSelector;
 import com.adavid.visualhasher.presentation.views.components.selectors.IllegalSelectedHashFunctionException;
@@ -71,6 +75,7 @@ public final class SwingView implements View {
 
     private final SwingActionMenu actionMenu = new SwingActionMenu();
     private final SwingActionBar actionBar = new SwingActionBar();
+    private final BoxesPanel boxesPanel = new BoxesPanel();
     private final JProgressBar progressBar = new JProgressBar(0, 100);
 
     private AbstractHashFunctionWorker hashFunctionWorker;
@@ -128,14 +133,13 @@ public final class SwingView implements View {
 
         // TODO Add the text area
 
-        final var boxesPanel = new BoxesPanel();
         final var mainConstraints = new GridBagConstraints();
         mainConstraints.gridwidth = GridBagConstraints.REMAINDER;
         mainConstraints.gridheight = 2;
         mainConstraints.weighty = 1;
         mainConstraints.fill = GridBagConstraints.BOTH;
-        mainLayout.addLayoutComponent(boxesPanel, mainConstraints);
-        mainPanel.add(boxesPanel);
+        mainLayout.addLayoutComponent(this.boxesPanel, mainConstraints);
+        mainPanel.add(this.boxesPanel);
 
         final var menuBar = this.createMenuBar();
 
@@ -309,9 +313,17 @@ public final class SwingView implements View {
     private void doneCallback() {
         try {
             final HashFunctionResult result = this.hashFunctionWorker.get();
-            // TODO Ajouter les boxes à l'écran
 
-            //                        result.boxes().forEach(this.boxesPanel::add);
+            result.boxes().forEach((final ComputedBox box) -> {
+                if (box.isColored()) {
+                    final var filled = box.getBalls() == 1;
+                    final var color = box.isInTheFirstBox() ? ColoredBox.Color.GREEN : ColoredBox.Color.RED;
+                    this.boxesPanel.addBox(new OpenAddessingBox(box.getID(), filled, color));
+                }
+                else {
+                    this.boxesPanel.addBox(new NumberBox(box.getID(), box.getBalls()));
+                }
+            });
 
             System.out.println(result.information());
             final class Output extends Thread {

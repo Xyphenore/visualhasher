@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@
 
 package com.adavid.visualhasher.domain.utility.ranges;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * The common implementation of an IntegerRange.
  *
@@ -26,7 +29,9 @@ package com.adavid.visualhasher.domain.utility.ranges;
  * @see IntegerRange
  * @since 1.0.0
  */
-public class CommonIntegerRange implements Range<Integer> {
+public class CommonIntegerRange implements Range<Integer>, Serializable {
+    @Serial
+    private static final long serialVersionUID = -3332345500411834850L;
     private final int min;
     private final int max;
 

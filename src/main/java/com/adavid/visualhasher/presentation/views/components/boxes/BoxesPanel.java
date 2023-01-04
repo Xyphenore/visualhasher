@@ -17,6 +17,8 @@
 
 package com.adavid.visualhasher.presentation.views.components.boxes;
 
+import com.adavid.visualhasher.domain.Box;
+
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -50,12 +52,9 @@ public final class BoxesPanel extends JScrollPane {
         return this.boxes;
     }
 
-    public void addBox(final NumberBox box) {
-        this.boxes.add(box);
-    }
-
-    public void addBox(final OpenAddessingBox box) {
-        this.boxes.add(box);
+    public void addBox(final Box box) {
+        final var goodBox = (CommonBaseBox) box;
+        this.boxes.add(goodBox);
     }
 
     public void clear() {

@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import com.adavid.visualhasher.domain.exceptions.EmptyStringException;
 import com.adavid.visualhasher.domain.exceptions.IllegalBoxesListException;
 import com.adavid.visualhasher.domain.exceptions.IllegalInformationException;
 import com.adavid.visualhasher.presentation.views.SwingView;
-import com.adavid.visualhasher.presentation.views.components.boxes.Box;
 import com.adavid.visualhasher.presentation.views.components.boxes.NumberBox;
 
 import java.util.List;
@@ -77,7 +76,7 @@ import java.util.List;
  * @see SwingView
  * @since 1.0.0
  */
-public record HashFunctionResult(String information, List<? extends Box> boxes) {
+public record HashFunctionResult(String information, List<ComputedBox> boxes) {
     // TODO use a configuration file
     public static final String INVALID_INFORMATION = "Cannot create the HashFunctionResult the given information is invalid.";
     public static final String INVALID_BOXES_LIST = "Cannot create the HashFunctionResult, the given list of boxes is invalid.";

@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,21 @@
 
 package com.adavid.visualhasher;
 
-import com.adavid.visualhasher.presentation.views.SwingView;
-import com.adavid.visualhasher.presentation.views.View;
+import com.adavid.visualhasher.presentation.SwingView;
+
+import javax.swing.SwingUtilities;
 
 /**
- * Default implementation of Application. Use Swing for the user presentation.
+ * The VisualHasher application.
+ * Use the static method main to start the application.
+ * Use Swing to show information and interact with the user.
  *
  * @author Axel DAVID
- * @version 1.0.0
- * @see Application
+ * @version 2.0.0
  * @since 1.0.0
  */
-public final class SwingApplication implements Application {
-    private final View view;
+public final class SwingApplication {
+    private final SwingView view;
 
     /**
      * Create a SwingApplication with the default title.
@@ -37,24 +39,38 @@ public final class SwingApplication implements Application {
      * @since 1.0.0
      */
     public SwingApplication() {
-        super();
-        this.view = new SwingView();
+        this(null);
     }
 
     /**
      * Create a SwingApplication with the given title.
      *
-     * @param title String. The title of the application, it might be null.
+     * @param title {@link String} The application's title.
      *
      * @since 1.0.0
      */
     public SwingApplication(final String title) {
         super();
-        this.view = new SwingView(title);
+
+        if (null == title) {
+            this.view = new SwingView();
+        }
+        else {
+            this.view = new SwingView(title);
+        }
     }
 
-    @Override
-    public void execute() {
-        this.view.execute();
+    /**
+     * The entry point of the application.
+     * Give the name of the application in the first argument of the run command.
+     *
+     * @param args {@link String}[] Arguments of application.
+     *
+     * @since 1.0.0
+     */
+    public static void main(final String[] args) {
+        final String title = ((null == args) || (0 == args.length)) ? null : args[0];
+
+        SwingUtilities.invokeLater(() -> new SwingApplication(title));
     }
 }

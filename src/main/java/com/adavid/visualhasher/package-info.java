@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,12 +27,11 @@
  *
  * <br><br>
  * <u><b>Classes list:</b></u><br>
- * - {@link com.adavid.visualhasher.Application}<br>
  * - {@link com.adavid.visualhasher.SwingApplication}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.Application
+ * @see com.adavid.visualhasher.SwingApplication
  * @since 1.0.0
  */
 package com.adavid.visualhasher;

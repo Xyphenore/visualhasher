@@ -20,7 +20,6 @@
  *
  * <br><br>
  * <u><b>Packages list:</b></u><br>
- * - {@link com.adavid.visualhasher.application}<br>
  * - {@link com.adavid.visualhasher.domain}<br>
  * - {@link com.adavid.visualhasher.infrastructure}<br>
  * - {@link com.adavid.visualhasher.presentation}<br>

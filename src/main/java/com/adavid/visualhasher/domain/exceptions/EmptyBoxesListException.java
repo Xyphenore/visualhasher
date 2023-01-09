@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
-import com.adavid.visualhasher.domain.HashFunctionResult;
+import com.adavid.visualhasher.domain.logics.HashFunctionResult;
 
 import java.io.Serial;
 
 /**
- * Thrown to indicate that a method has been passed an empty boxes list argument.
+ * Thrown to indicate that a method has been passed an empty box list argument.
  *
  * @author Axel DAVID
  * @version 1.0.0

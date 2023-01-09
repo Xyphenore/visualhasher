@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 
 package com.adavid.visualhasher.domain.utility;
 
-import com.adavid.visualhasher.domain.utility.ranges.CommonIntegerRange;
-import com.adavid.visualhasher.domain.utility.ranges.Range;
+import com.adavid.ranges.CommonIntegerRange;
+import com.adavid.ranges.Range;
 
 /**
  * An interval for number of draws.
@@ -33,7 +33,7 @@ public final class DrawsRange extends CommonIntegerRange {
     /**
      * Create the interval for draws.
      *
-     * @param boxes NumberOfBoxes. Number of boxes selected by the user.
+     * @param boxes NumberOfBoxes. Number of box selected by the user.
      *
      * @since 1.0.0
      */
@@ -45,7 +45,7 @@ public final class DrawsRange extends CommonIntegerRange {
         // Necessary to throw an explicit exception
         super(0, 0);
         throw new UnsupportedOperationException(
-                "Cannot create a DrawsRange without specifying the number of boxes. Please use the public constructor and specify the number of boxes.");
+                "Cannot create a DrawsRange without specifying the number of box. Please use the public constructor and specify the number of box.");
     }
 
     @Override

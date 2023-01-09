@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
  *
  * <br><br>
  * <u><b>Workers list:</b></u><br>
- * - {@link com.adavid.visualhasher.domain.AbstractHashFunctionWorker}<br>
- * - {@link com.adavid.visualhasher.domain.ChainingHashFunctionWorker}<br>
- * - {@link com.adavid.visualhasher.domain.DoubleChoiceHashFunctionWorker}<br>
- * - {@link com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker}<br>
- * - {@link com.adavid.visualhasher.domain.QuadraticOpenAddressingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.logics.AbstractHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.logics.ChainingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.logics.DoubleChoiceHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.logics.LinearOpenAddressingHashFunctionWorker}<br>
+ * - {@link com.adavid.visualhasher.domain.logics.QuadraticOpenAddressingHashFunctionWorker}<br>
  *
  * <br><br>
  * <u><b>Packages list:</b></u><br>

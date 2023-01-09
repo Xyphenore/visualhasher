@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,19 @@
  */
 
 /**
- * All components for user presentation like views and input controllers.
+ * All components for the user presentation.
  *
  * <br><br>
- * <u><b>Packages list:</b></u><br>
- * - {@link com.adavid.visualhasher.presentation.controllers}<br>
- * - {@link com.adavid.visualhasher.presentation.views}<br>
+ * <u><b>Components list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.views.View}<br>
+ * - {@link com.adavid.visualhasher.presentation.SwingView}<br>
+ *
+ * <br><br>
+ * <u><b>Package list:</b></u><br>
+ * - {@link com.adavid.visualhasher.presentation.components}<br>
  *
  * @version 1.0.0
  * @author Axel DAVID
- * @see com.adavid.visualhasher.presentation.views
  * @see com.adavid.visualhasher.presentation.controllers
  * @since 1.0.0
  */

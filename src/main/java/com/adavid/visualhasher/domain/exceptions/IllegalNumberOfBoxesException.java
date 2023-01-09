@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import com.adavid.visualhasher.domain.utility.NumberOfBoxes;
 import java.io.Serial;
 
 /**
- * Thrown to indicate that the constructor of NumberOfBoxes has been passed an invalid number of boxes.
+ * Thrown to indicate that the constructor of NumberOfBoxes has been passed an invalid number of box.
  *
  * @author Axel DAVID
  * @version 1.0.0

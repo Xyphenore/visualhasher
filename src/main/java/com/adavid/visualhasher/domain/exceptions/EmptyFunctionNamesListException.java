@@ -17,7 +17,7 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
-import com.adavid.visualhasher.presentation.views.components.selectors.HashFunctionSelector;
+import com.adavid.visualhasher.presentation.components.selectors.HashFunctionSelector;
 
 import java.io.Serial;
 

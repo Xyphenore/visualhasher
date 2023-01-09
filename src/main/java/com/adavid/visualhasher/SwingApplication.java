@@ -20,6 +20,8 @@ package com.adavid.visualhasher;
 import com.adavid.visualhasher.presentation.SwingView;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * The VisualHasher application.
@@ -70,6 +72,24 @@ public final class SwingApplication {
      */
     public static void main(final String[] args) {
         final String title = ((null == args) || (0 == args.length)) ? null : args[0];
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (final ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException |
+                     IllegalAccessException error) {
+            System.err.println("Use the cross-platform look and feel.");
+            error.printStackTrace();
+
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            }
+            catch (final ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException |
+                         IllegalAccessException backupError) {
+                System.err.println("Error: Cannot use the cross-platform look and feel.");
+                backupError.printStackTrace();
+            }
+        }
 
         SwingUtilities.invokeLater(() -> new SwingApplication(title));
     }

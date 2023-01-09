@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
+import com.adavid.visualhasher.domain.logics.LinearOpenAddressingHashFunctionWorker;
+
 import java.io.Serial;
 
 /**
@@ -24,7 +26,7 @@ import java.io.Serial;
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.domain.LinearOpenAddressingHashFunctionWorker
+ * @see LinearOpenAddressingHashFunctionWorker
  * @since 1.0.0
  */
 public class AlreadyMadeLoopException extends Exception {

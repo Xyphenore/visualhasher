@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import com.adavid.visualhasher.domain.exceptions.IllegalNumberOfBoxesException;
 import java.util.function.IntSupplier;
 
 /**
- * A strong type integer, which represent a valid number of boxes.
+ * A strong type integer, which represent a valid number of box.
  *
  * @author Axel DAVID
  * @version 1.0.0
@@ -33,14 +33,14 @@ public final class NumberOfBoxes implements IntSupplier {
     private final int boxes;
 
     /**
-     * Create a NumberOfBoxes with the given number of boxes.
+     * Create a NumberOfBoxes with the given number of box.
      *
      * @param boxes Int. The number must be between 2 and the positive integer infinity.
      */
     public NumberOfBoxes(final int boxes) {
         super();
         if (2 > boxes) {
-            throw new IllegalNumberOfBoxesException("Cannot create a NumberOfBoxes with an invalid number of boxes. " + "Value: " + boxes + ", min: 2, max: inf. Please give a value between 2 and the positive integer infinity.");
+            throw new IllegalNumberOfBoxesException("Cannot create a NumberOfBoxes with an invalid number of box. " + "Value: " + boxes + ", min: 2, max: inf. Please give a value between 2 and the positive integer infinity.");
         }
 
         this.boxes = boxes;
@@ -48,7 +48,7 @@ public final class NumberOfBoxes implements IntSupplier {
 
     private NumberOfBoxes() {
         super();
-        throw new UnsupportedOperationException("Cannot create a NumberOfBoxes without the number of boxes. Please " + "call the public constructor with a number of boxes.");
+        throw new UnsupportedOperationException("Cannot create a NumberOfBoxes without the number of box. Please " + "call the public constructor with a number of box.");
     }
 
     @Override

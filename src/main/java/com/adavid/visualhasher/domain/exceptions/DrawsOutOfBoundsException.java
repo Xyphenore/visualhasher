@@ -1,5 +1,5 @@
 /*
- * VisualHasher Copyright (C) 2022 DAVID Axel
+ * VisualHasher Copyright (C) 2023 DAVID Axel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 package com.adavid.visualhasher.domain.exceptions;
 
+import com.adavid.visualhasher.domain.logics.AbstractHashFunctionWorker;
 import com.adavid.visualhasher.domain.utility.DrawsRange;
 
 import java.io.Serial;
@@ -26,7 +27,7 @@ import java.io.Serial;
  *
  * @author Axel DAVID
  * @version 1.0.0
- * @see com.adavid.visualhasher.domain.AbstractHashFunctionWorker
+ * @see AbstractHashFunctionWorker
  * @since 1.0.0
  */
 public final class DrawsOutOfBoundsException extends IllegalArgumentException {
